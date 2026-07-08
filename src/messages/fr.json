@@ -6,10 +6,17 @@
   },
   "HomePage": {
     "title": "EloChessPlanner",
-    "subtitle": "Organisez vos tournois d'échecs maison et suivez votre Elo",
     "description": "Générez des appariements Swiss conformes aux règles FIDE pour vos tournois en famille et anticipez votre évolution Elo du mois prochain.",
     "playersLink": "Joueurs",
-    "tournamentsLink": "Tournois"
+    "tournamentsLink": "Tournois",
+    "latestTournamentHeading": "Dernier tournoi",
+    "continueTournamentLink": "Continuer le tournoi",
+    "viewResultsLink": "Voir les résultats",
+    "noTournamentsYet": "Aucun tournoi pour le moment.",
+    "createTournamentLink": "Créer un tournoi",
+    "familyRatingsHeading": "Elo de la famille",
+    "noPlayersYet": "Aucun joueur enregistré pour le moment.",
+    "ratingUnrated": "Non classé"
   },
   "PlayersPage": {
     "title": "Joueurs",
