@@ -2,6 +2,26 @@
   "HomePage": {
     "title": "EloChessPlanner",
     "subtitle": "Plan home chess tournaments and track your Elo",
-    "description": "Generate FIDE-compliant Swiss pairings for your family tournaments and forecast next month's Elo change."
+    "description": "Generate FIDE-compliant Swiss pairings for your family tournaments and forecast next month's Elo change.",
+    "playersLink": "Players"
+  },
+  "PlayersPage": {
+    "title": "Players",
+    "description": "Register family members and occasional guests. The official rating follows a FIDE, then FFE, then chess.com priority and is used to seed the first round of a tournament.",
+    "addPlayerHeading": "Add a player",
+    "nameLabel": "Name",
+    "typeLabel": "Type",
+    "typeFamily": "Family",
+    "typeGuest": "Guest (one-off)",
+    "birthDateLabel": "Birth date (optional)",
+    "fideRatingLabel": "FIDE rating (optional)",
+    "ffeRatingLabel": "FFE rating (optional)",
+    "chesscomRatingLabel": "chess.com rating (optional)",
+    "submitButton": "Add player",
+    "listHeading": "Registered players",
+    "emptyState": "No player registered yet.",
+    "ratingUnrated": "Unrated",
+    "removeButton": "Remove",
+    "removeConfirm": "Remove {name}?"
   }
 }

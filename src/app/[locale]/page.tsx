@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export default function HomePage() {
   const t = useTranslations("HomePage");
@@ -15,6 +16,12 @@ export default function HomePage() {
       <p className="max-w-md text-sm text-foreground/50">
         {t("description")}
       </p>
+      <Link
+        href="/players"
+        className="mt-4 rounded bg-foreground px-4 py-2 text-sm font-medium text-background"
+      >
+        {t("playersLink")}
+      </Link>
     </main>
   );
 }

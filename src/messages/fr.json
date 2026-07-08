@@ -2,6 +2,26 @@
   "HomePage": {
     "title": "EloChessPlanner",
     "subtitle": "Organisez vos tournois d'échecs maison et suivez votre Elo",
-    "description": "Générez des appariements Swiss conformes aux règles FIDE pour vos tournois en famille et anticipez votre évolution Elo du mois prochain."
+    "description": "Générez des appariements Swiss conformes aux règles FIDE pour vos tournois en famille et anticipez votre évolution Elo du mois prochain.",
+    "playersLink": "Joueurs"
+  },
+  "PlayersPage": {
+    "title": "Joueurs",
+    "description": "Enregistrez les membres de la famille et les invités ponctuels. Le rating officiel suit une priorité FIDE, puis FFE, puis chess.com, et sert de base au seeding de la première ronde d'un tournoi.",
+    "addPlayerHeading": "Ajouter un joueur",
+    "nameLabel": "Nom",
+    "typeLabel": "Type",
+    "typeFamily": "Famille",
+    "typeGuest": "Invité (ponctuel)",
+    "birthDateLabel": "Date de naissance (optionnelle)",
+    "fideRatingLabel": "Elo FIDE (optionnel)",
+    "ffeRatingLabel": "Elo FFE (optionnel)",
+    "chesscomRatingLabel": "Elo chess.com (optionnel)",
+    "submitButton": "Ajouter le joueur",
+    "listHeading": "Joueurs enregistrés",
+    "emptyState": "Aucun joueur enregistré pour le moment.",
+    "ratingUnrated": "Non classé",
+    "removeButton": "Retirer",
+    "removeConfirm": "Retirer {name} ?"
   }
 }
