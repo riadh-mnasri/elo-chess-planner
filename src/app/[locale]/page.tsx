@@ -16,12 +16,20 @@ export default function HomePage() {
       <p className="max-w-md text-sm text-foreground/50">
         {t("description")}
       </p>
-      <Link
-        href="/players"
-        className="mt-4 rounded bg-foreground px-4 py-2 text-sm font-medium text-background"
-      >
-        {t("playersLink")}
-      </Link>
+      <div className="mt-4 flex gap-3">
+        <Link
+          href="/players"
+          className="rounded bg-foreground px-4 py-2 text-sm font-medium text-background"
+        >
+          {t("playersLink")}
+        </Link>
+        <Link
+          href="/tournaments"
+          className="rounded border border-foreground/20 px-4 py-2 text-sm font-medium"
+        >
+          {t("tournamentsLink")}
+        </Link>
+      </div>
     </main>
   );
 }

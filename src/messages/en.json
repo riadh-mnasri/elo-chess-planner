@@ -3,7 +3,8 @@
     "title": "EloChessPlanner",
     "subtitle": "Plan home chess tournaments and track your Elo",
     "description": "Generate FIDE-compliant Swiss pairings for your family tournaments and forecast next month's Elo change.",
-    "playersLink": "Players"
+    "playersLink": "Players",
+    "tournamentsLink": "Tournaments"
   },
   "PlayersPage": {
     "title": "Players",
@@ -23,5 +24,55 @@
     "ratingUnrated": "Unrated",
     "removeButton": "Remove",
     "removeConfirm": "Remove {name}?"
+  },
+  "TournamentsPage": {
+    "title": "Tournaments",
+    "description": "Create a home tournament and generate FIDE-inspired Swiss pairings round after round.",
+    "newTournamentButton": "New tournament",
+    "emptyState": "No tournament yet.",
+    "roundsProgress": "Round {current} / {total}"
+  },
+  "NewTournamentPage": {
+    "title": "New tournament",
+    "nameLabel": "Tournament name",
+    "dateLabel": "Date",
+    "roundsPlannedLabel": "Number of rounds",
+    "participantsLabel": "Participants",
+    "participantsHelp": "Select at least two players. The seeded rating (FIDE / FFE / chess.com) is frozen for this tournament.",
+    "noPlayersWarning": "No player registered yet. Add players first.",
+    "submitButton": "Create tournament and generate round 1"
+  },
+  "TournamentDetailPage": {
+    "roundHeading": "Round {number}",
+    "boardLabel": "Board",
+    "whiteLabel": "White",
+    "blackLabel": "Black",
+    "byeLabel": "Bye (full point)",
+    "resultWhiteWins": "White wins",
+    "resultDraw": "Draw",
+    "resultBlackWins": "Black wins",
+    "resultPending": "Not played yet",
+    "submitResultsButton": "Save results",
+    "pasteHeading": "Or paste the round results",
+    "pasteHelp": "One line per board, format: White - Black: Result (1-0, 0-1, 1/2-1/2).",
+    "pastePlaceholder": "Riadh - Sany: 1-0",
+    "pasteSubmitButton": "Apply pasted results",
+    "generateNextRoundButton": "Generate next round",
+    "tournamentComplete": "This tournament has completed all its planned rounds.",
+    "standingsHeading": "Standings",
+    "rankLabel": "#",
+    "playerLabel": "Player",
+    "scoreLabel": "Score",
+    "buchholzLabel": "Buchholz",
+    "sonnebornBergerLabel": "Sonneborn-Berger",
+    "printLink": "Printable pairing sheet"
+  },
+  "PrintPage": {
+    "roundHeading": "Round {number}",
+    "boardLabel": "Board",
+    "whiteLabel": "White",
+    "blackLabel": "Black",
+    "resultLabel": "Result",
+    "byeLabel": "Bye"
   }
 }

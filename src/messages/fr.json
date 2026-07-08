@@ -3,7 +3,8 @@
     "title": "EloChessPlanner",
     "subtitle": "Organisez vos tournois d'échecs maison et suivez votre Elo",
     "description": "Générez des appariements Swiss conformes aux règles FIDE pour vos tournois en famille et anticipez votre évolution Elo du mois prochain.",
-    "playersLink": "Joueurs"
+    "playersLink": "Joueurs",
+    "tournamentsLink": "Tournois"
   },
   "PlayersPage": {
     "title": "Joueurs",
@@ -23,5 +24,55 @@
     "ratingUnrated": "Non classé",
     "removeButton": "Retirer",
     "removeConfirm": "Retirer {name} ?"
+  },
+  "TournamentsPage": {
+    "title": "Tournois",
+    "description": "Créez un tournoi maison et générez des appariements Swiss inspirés des règles FIDE, ronde après ronde.",
+    "newTournamentButton": "Nouveau tournoi",
+    "emptyState": "Aucun tournoi pour le moment.",
+    "roundsProgress": "Ronde {current} / {total}"
+  },
+  "NewTournamentPage": {
+    "title": "Nouveau tournoi",
+    "nameLabel": "Nom du tournoi",
+    "dateLabel": "Date",
+    "roundsPlannedLabel": "Nombre de rondes",
+    "participantsLabel": "Participants",
+    "participantsHelp": "Sélectionnez au moins deux joueurs. Le rating de seeding (FIDE / FFE / chess.com) est figé pour ce tournoi.",
+    "noPlayersWarning": "Aucun joueur enregistré pour le moment. Ajoutez d'abord des joueurs.",
+    "submitButton": "Créer le tournoi et générer la ronde 1"
+  },
+  "TournamentDetailPage": {
+    "roundHeading": "Ronde {number}",
+    "boardLabel": "Échiquier",
+    "whiteLabel": "Blancs",
+    "blackLabel": "Noirs",
+    "byeLabel": "Exempt (point complet)",
+    "resultWhiteWins": "Les Blancs gagnent",
+    "resultDraw": "Match nul",
+    "resultBlackWins": "Les Noirs gagnent",
+    "resultPending": "Pas encore joué",
+    "submitResultsButton": "Enregistrer les résultats",
+    "pasteHeading": "Ou collez les résultats de la ronde",
+    "pasteHelp": "Une ligne par échiquier, format : Blancs - Noirs: Résultat (1-0, 0-1, 1/2-1/2).",
+    "pastePlaceholder": "Riadh - Sany: 1-0",
+    "pasteSubmitButton": "Appliquer les résultats collés",
+    "generateNextRoundButton": "Générer la ronde suivante",
+    "tournamentComplete": "Ce tournoi a terminé toutes ses rondes prévues.",
+    "standingsHeading": "Classement",
+    "rankLabel": "#",
+    "playerLabel": "Joueur",
+    "scoreLabel": "Score",
+    "buchholzLabel": "Buchholz",
+    "sonnebornBergerLabel": "Sonneborn-Berger",
+    "printLink": "Feuille d'appariement imprimable"
+  },
+  "PrintPage": {
+    "roundHeading": "Ronde {number}",
+    "boardLabel": "Échiquier",
+    "whiteLabel": "Blancs",
+    "blackLabel": "Noirs",
+    "resultLabel": "Résultat",
+    "byeLabel": "Exempt"
   }
 }
