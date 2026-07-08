@@ -1,8 +1,15 @@
 import path from "node:path";
 import os from "node:os";
+import type { PlayerRepository } from "@/application/ports/player-repository";
+import type { TournamentRepository } from "@/application/ports/tournament-repository";
+import type { ExternalGameRepository } from "@/application/ports/external-game-repository";
 import { JsonFilePlayerRepository } from "@/infrastructure/repositories/json-file-player-repository";
 import { JsonFileTournamentRepository } from "@/infrastructure/repositories/json-file-tournament-repository";
 import { JsonFileExternalGameRepository } from "@/infrastructure/repositories/json-file-external-game-repository";
+import { PostgresPlayerRepository } from "@/infrastructure/repositories/postgres-player-repository";
+import { PostgresTournamentRepository } from "@/infrastructure/repositories/postgres-tournament-repository";
+import { PostgresExternalGameRepository } from "@/infrastructure/repositories/postgres-external-game-repository";
+import { sql } from "@/infrastructure/database/sql-client";
 import { ChessComRatingProvider } from "@/infrastructure/external-rating-providers/chess-com-rating-provider";
 import { LichessRatingProvider } from "@/infrastructure/external-rating-providers/lichess-rating-provider";
 import { RegisterPlayerUseCase } from "@/application/use-cases/register-player";
@@ -19,28 +26,33 @@ import { SyncExternalGamesUseCase } from "@/application/use-cases/sync-external-
 import { ListExternalGamesUseCase } from "@/application/use-cases/list-external-games";
 import { GetEloForecastUseCase } from "@/application/use-cases/get-elo-forecast";
 
-// Local file-based persistence: keeps data across server restarts and is
-// trivially exportable/backed up as a plain JSON file. The project folder
-// is writable locally, which is what makes the file useful as a backup/
-// export, but on Vercel the deployment bundle is read-only - only /tmp is
-// writable there, and it is not guaranteed to survive between invocations
-// or be shared across instances. Writing to /tmp avoids crashing on Vercel,
-// but data can still disappear at any time in that environment. A
-// database-backed adapter (Postgres/Neon) implementing the same repository
-// ports is still needed for real persistence once deployed.
-const dataDir = process.env.VERCEL
-  ? path.join(os.tmpdir(), "elo-chess-planner-data")
-  : path.join(process.cwd(), ".data");
+// When DATABASE_URL is set (Neon Postgres, provisioned via the Vercel
+// Marketplace), every repository is backed by a real, shared database -
+// consistent across every serverless instance, unlike the JSON file store.
+// Without it (e.g. local dev with no `.env.local` pulled), the app falls
+// back to local JSON files under .data/, which stay useful as a
+// zero-setup, exportable option for local-only use.
+let playerRepository: PlayerRepository;
+let tournamentRepository: TournamentRepository;
+let externalGameRepository: ExternalGameRepository;
 
-const playerRepository = new JsonFilePlayerRepository(
-  path.join(dataDir, "players.json"),
-);
-const tournamentRepository = new JsonFileTournamentRepository(
-  path.join(dataDir, "tournaments.json"),
-);
-const externalGameRepository = new JsonFileExternalGameRepository(
-  path.join(dataDir, "external-games.json"),
-);
+if (process.env.DATABASE_URL) {
+  playerRepository = new PostgresPlayerRepository(sql);
+  tournamentRepository = new PostgresTournamentRepository(sql);
+  externalGameRepository = new PostgresExternalGameRepository(sql);
+} else {
+  const dataDir = process.env.VERCEL
+    ? path.join(os.tmpdir(), "elo-chess-planner-data")
+    : path.join(process.cwd(), ".data");
+
+  playerRepository = new JsonFilePlayerRepository(path.join(dataDir, "players.json"));
+  tournamentRepository = new JsonFileTournamentRepository(
+    path.join(dataDir, "tournaments.json"),
+  );
+  externalGameRepository = new JsonFileExternalGameRepository(
+    path.join(dataDir, "external-games.json"),
+  );
+}
 
 export const registerPlayerUseCase = new RegisterPlayerUseCase(playerRepository);
 export const listPlayersUseCase = new ListPlayersUseCase(playerRepository);
