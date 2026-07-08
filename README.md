@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EloChessPlanner
 
-## Getting Started
+Copyright © Riadh MNASRI. All rights reserved.
 
-First, run the development server:
+## English
+
+A web app to organize home chess tournaments (family + occasional guests) with
+FIDE-compliant Swiss pairings, round-by-round results entry, and a statistical
+forecast of next month's Elo change based on imported external results
+(chess.com, lichess, FFE...).
+
+The source code and code comments are written in English. The user interface
+and documentation are available in English and French.
+
+### Architecture
+
+The codebase follows a hexagonal (ports & adapters) architecture:
+
+- `src/domain`: pure business entities and rules, no framework dependency.
+- `src/application`: use cases orchestrating the domain.
+- `src/infrastructure`: adapters (database, external APIs, CSV import).
+- `src/presentation`: Next.js routes and UI components.
+- `src/app`: Next.js App Router entry points (`[locale]` segment for i18n).
+
+### Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app runs on [http://localhost:3220](http://localhost:3220).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Tests follow a TDD approach, structured in `// Given // When // Then` blocks.
 
-## Learn More
+```bash
+npm test        # run once
+npm run test:watch
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Deploying to Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx vercel        # preview deployment
+npx vercel --prod # production deployment
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Or connect the GitHub repository to a Vercel project for automatic deployments
+on every push.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Français
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Une application web pour organiser des tournois d'échecs maison (famille +
+invités ponctuels) avec un appariement Swiss conforme aux règles FIDE, une
+saisie des résultats ronde par ronde, et une prédiction statistique de
+l'évolution de l'Elo pour le mois suivant, basée sur les résultats importés de
+sites externes (chess.com, lichess, FFE...).
+
+Le code source et les commentaires sont écrits en anglais. L'interface
+utilisateur et la documentation sont disponibles en anglais et en français.
+
+### Architecture
+
+Le projet suit une architecture hexagonale (ports & adapters) :
+
+- `src/domain` : entités et règles métier pures, sans dépendance framework.
+- `src/application` : cas d'usage orchestrant le domaine.
+- `src/infrastructure` : adaptateurs (base de données, API externes, import CSV).
+- `src/presentation` : routes et composants Next.js.
+- `src/app` : points d'entrée Next.js App Router (segment `[locale]` pour l'i18n).
+
+### Développement local
+
+```bash
+npm install
+npm run dev
+```
+
+L'application tourne sur [http://localhost:3220](http://localhost:3220).
+
+### Tests
+
+Les tests suivent une approche TDD, structurés en blocs `// Given // When // Then`.
+
+```bash
+npm test        # exécution unique
+npm run test:watch
+```
+
+### Déploiement sur Vercel
+
+```bash
+npx vercel        # déploiement de prévisualisation
+npx vercel --prod # déploiement en production
+```
+
+Ou connectez le dépôt GitHub à un projet Vercel pour un déploiement automatique
+à chaque push.

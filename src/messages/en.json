@@ -1,0 +1,7 @@
+{
+  "HomePage": {
+    "title": "EloChessPlanner",
+    "subtitle": "Plan home chess tournaments and track your Elo",
+    "description": "Generate FIDE-compliant Swiss pairings for your family tournaments and forecast next month's Elo change."
+  }
+}
