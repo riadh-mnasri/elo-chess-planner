@@ -40,8 +40,8 @@ The codebase follows a hexagonal (ports & adapters) architecture:
   pairing engine, the CSV/API import parsers), no framework dependency.
 - `src/application`: use cases orchestrating the domain, behind repository
   and external-provider ports.
-- `src/infrastructure`: adapters (JSON file repositories, chess.com/lichess
-  API clients).
+- `src/infrastructure`: adapters (Postgres and JSON file repositories,
+  chess.com/lichess API clients).
 - `src/presentation`: reusable UI components (buttons, cards, badges,
   forms).
 - `src/app`: Next.js App Router entry points and Server Actions (`[locale]`
@@ -58,10 +58,13 @@ npm install
 npm run dev
 ```
 
-The app runs on [http://localhost:3220](http://localhost:3220). Data is
-stored locally as plain JSON files under `.data/` (players, tournaments,
-imported games), which is not tracked by git and can be copied as a backup
-or export.
+The app runs on [http://localhost:3220](http://localhost:3220). If a
+`DATABASE_URL` environment variable is set (e.g. via `vercel env pull
+.env.local` after provisioning the Neon integration below), data is read
+from and written to that Postgres database - the same one the deployed app
+uses. Without it, the app falls back to plain JSON files under `.data/`
+(not tracked by git, copyable as a backup or export), which is enough for a
+quick local-only trial.
 
 ### Tests
 
@@ -80,19 +83,25 @@ npx vercel --prod # production deployment
 Or connect the GitHub repository to a Vercel project for automatic
 deployments on every push.
 
-**Important limitation**: the local JSON file storage only works reliably
-on a single local instance. On Vercel, the deployment's filesystem is
-read-only except for `/tmp`, which the app falls back to automatically so
-it doesn't crash, but data stored there can disappear at any time (cold
-starts, redeploys, multiple instances). The Vercel deployment is useful to
-preview the app live, but a database-backed adapter (e.g. Neon/Vercel
-Postgres, implementing the same repository ports under
-`src/application/ports`) is needed before relying on it for real,
-persistent, multi-device usage.
+Persistence is backed by Neon Postgres, provisioned via the Vercel
+Marketplace:
 
-### What's not built yet
+```bash
+npx vercel install neon   # provisions a Neon project and sets DATABASE_URL
+```
 
-- A database-backed persistence adapter for real, reliable Vercel usage.
+Once installed, Vercel automatically injects `DATABASE_URL` (and a few
+other Neon-specific variables) into the Production, Preview, and
+Development environments, so every deployment - and any local dev session
+that pulls those variables - shares the same database. The three
+Postgres-backed repositories (`src/infrastructure/repositories/postgres-*`)
+store each entity as a JSONB document keyed by id and create their own
+tables on first use, so no separate migration step is needed. Without
+`DATABASE_URL` set, the app falls back to local JSON files, which is only
+suitable for a single local instance (an earlier attempt relied on
+Vercel's `/tmp` as a fallback there too, but it turned out not to be
+shared across serverless instances, causing data to intermittently
+disappear or duplicate - Postgres removes that problem entirely).
 
 ## Français
 
@@ -132,7 +141,7 @@ Le projet suit une architecture hexagonale (ports & adapters) :
   framework.
 - `src/application` : cas d'usage orchestrant le domaine, derrière des
   ports de dépôts et de fournisseurs externes.
-- `src/infrastructure` : adaptateurs (dépôts JSON, clients API
+- `src/infrastructure` : adaptateurs (dépôts Postgres et JSON, clients API
   chess.com/lichess).
 - `src/presentation` : composants d'interface réutilisables (boutons,
   cartes, badges, formulaires).
@@ -151,10 +160,14 @@ npm install
 npm run dev
 ```
 
-L'application tourne sur [http://localhost:3220](http://localhost:3220).
-Les données sont stockées localement sous forme de fichiers JSON dans
-`.data/` (joueurs, tournois, parties importées), non suivis par git et
-copiables directement comme sauvegarde ou export.
+L'application tourne sur [http://localhost:3220](http://localhost:3220). Si
+une variable d'environnement `DATABASE_URL` est définie (par exemple via
+`vercel env pull .env.local` après avoir provisionné l'intégration Neon
+ci-dessous), les données sont lues et écrites dans cette base Postgres —
+la même que celle utilisée par l'application déployée. Sans elle,
+l'application bascule sur de simples fichiers JSON dans `.data/` (non
+suivis par git, copiables comme sauvegarde ou export), suffisant pour un
+essai rapide en local uniquement.
 
 ### Tests
 
@@ -173,18 +186,24 @@ npx vercel --prod # déploiement en production
 Ou connectez le dépôt GitHub à un projet Vercel pour un déploiement
 automatique à chaque push.
 
-**Limitation importante** : le stockage JSON local ne fonctionne de façon
-fiable que sur une seule instance locale. Sur Vercel, le système de fichiers
-du déploiement est en lecture seule sauf `/tmp`, sur lequel l'application
-bascule automatiquement pour éviter de planter, mais les données qui y sont
-stockées peuvent disparaître à tout moment (redémarrage à froid,
-redéploiement, plusieurs instances). Le déploiement Vercel est utile pour
-prévisualiser l'application en ligne, mais un adaptateur de persistance basé
-sur une base de données (par exemple Neon/Vercel Postgres, implémentant les
-mêmes ports de dépôt sous `src/application/ports`) est nécessaire avant de
-s'en servir pour un usage réel, persistant et multi-appareils.
+La persistance repose sur Neon Postgres, provisionné via le Marketplace
+Vercel :
 
-### Ce qui n'est pas encore fait
+```bash
+npx vercel install neon   # provisionne un projet Neon et définit DATABASE_URL
+```
 
-- Un adaptateur de persistance basé sur une base de données pour un usage
-  Vercel réel et fiable.
+Une fois installée, Vercel injecte automatiquement `DATABASE_URL` (et
+quelques autres variables spécifiques à Neon) dans les environnements
+Production, Preview et Development, si bien que chaque déploiement — ainsi
+que toute session de dev local ayant récupéré ces variables — partage la
+même base. Les trois dépôts Postgres
+(`src/infrastructure/repositories/postgres-*`) stockent chaque entité sous
+forme de document JSONB indexé par id et créent leurs propres tables au
+premier usage, sans étape de migration séparée. Sans `DATABASE_URL`,
+l'application bascule sur des fichiers JSON locaux, adaptés uniquement à
+une seule instance locale (une première tentative reposait aussi sur
+`/tmp` sur Vercel comme repli, mais ce répertoire s'est avéré non partagé
+entre les instances serverless, causant des données qui disparaissaient ou
+se dupliquaient de façon intermittente — Postgres élimine complètement ce
+problème).
