@@ -20,8 +20,8 @@ export default async function TournamentPrintPage({
 
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-6 py-12 print:px-0 print:py-4">
-      <h1 className="text-2xl font-semibold">{tournament.name}</h1>
-      <h2 className="text-lg font-medium">
+      <h1 className="font-display text-2xl font-semibold">{tournament.name}</h1>
+      <h2 className="text-lg font-medium text-muted">
         {t("roundHeading", { number: round.number })}
       </h2>
       <table className="w-full border-collapse text-sm">

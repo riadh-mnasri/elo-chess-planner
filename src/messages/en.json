@@ -1,4 +1,9 @@
 {
+  "Nav": {
+    "home": "Home",
+    "players": "Players",
+    "tournaments": "Tournaments"
+  },
   "HomePage": {
     "title": "EloChessPlanner",
     "subtitle": "Plan home chess tournaments and track your Elo",

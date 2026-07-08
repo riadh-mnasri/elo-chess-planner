@@ -6,6 +6,7 @@ import {
   generateNextRoundAction,
   type GenerateNextRoundState,
 } from "@/app/[locale]/tournaments/actions";
+import { Button } from "@/presentation/components/ui/button";
 
 const initialState: GenerateNextRoundState = { error: null };
 
@@ -24,17 +25,13 @@ export function GenerateNextRoundButton({
     <form action={formAction} className="flex flex-col gap-2">
       <input type="hidden" name="tournamentId" value={tournamentId} />
       {state.error ? (
-        <p className="text-sm text-red-600" role="alert">
+        <p className="text-sm text-danger" role="alert">
           {state.error}
         </p>
       ) : null}
-      <button
-        type="submit"
-        disabled={isPending}
-        className="self-start rounded bg-foreground px-4 py-2 text-sm font-medium text-background disabled:opacity-50"
-      >
+      <Button type="submit" disabled={isPending} className="self-start">
         {t("generateNextRoundButton")}
-      </button>
+      </Button>
     </form>
   );
 }

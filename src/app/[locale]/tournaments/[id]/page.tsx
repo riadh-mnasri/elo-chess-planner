@@ -7,6 +7,8 @@ import { computeStandingsTable } from "@/domain/tournament/compute-standings-tab
 import { RoundResultsForm } from "@/presentation/components/round-results-form";
 import { PasteResultsForm } from "@/presentation/components/paste-results-form";
 import { GenerateNextRoundButton } from "@/presentation/components/generate-next-round-button";
+import { Card } from "@/presentation/components/ui/card";
+import { Badge } from "@/presentation/components/ui/badge";
 
 const RESULT_LABEL: Record<string, string> = {
   white: "1-0",
@@ -39,11 +41,18 @@ export default async function TournamentDetailPage({
 
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-8 px-6 py-12">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">{tournament.name}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="font-display text-2xl font-semibold tracking-tight">
+            {tournament.name}
+          </h1>
+          <Badge tone={isTournamentComplete ? "gold" : "accent"} className="mt-2">
+            {`${tournament.rounds.length} / ${tournament.roundsPlanned}`}
+          </Badge>
+        </div>
         <Link
           href={`/tournaments/${tournament.id}/print`}
-          className="mt-1 inline-block text-sm text-foreground/60 underline underline-offset-4"
+          className="text-sm font-medium text-accent hover:underline underline-offset-4"
         >
           {t("printLink")}
         </Link>
@@ -53,8 +62,8 @@ export default async function TournamentDetailPage({
         .slice()
         .reverse()
         .map((round) => (
-          <section key={round.number} className="flex flex-col gap-3">
-            <h2 className="text-lg font-medium">
+          <Card key={round.number} className="flex flex-col gap-4">
+            <h2 className="font-display text-lg font-semibold">
               {t("roundHeading", { number: round.number })}
             </h2>
 
@@ -71,23 +80,35 @@ export default async function TournamentDetailPage({
                 />
               </>
             ) : (
-              <ul className="flex flex-col gap-1 text-sm">
+              <ul className="flex flex-col gap-2 text-sm">
                 {round.pairings.map((pairing) => (
-                  <li key={pairing.board} className="flex justify-between border-t border-foreground/10 py-1">
+                  <li
+                    key={pairing.board}
+                    className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2"
+                  >
                     <span>
-                      {t("boardLabel")} {pairing.board}: {nameById.get(pairing.whitePlayerId)}
-                      {pairing.blackPlayerId
-                        ? ` - ${nameById.get(pairing.blackPlayerId)}`
-                        : ` (${t("byeLabel")})`}
+                      <span className="text-muted">
+                        {t("boardLabel")} {pairing.board}
+                      </span>{" "}
+                      {nameById.get(pairing.whitePlayerId)}
+                      {pairing.blackPlayerId ? (
+                        <>
+                          {" "}
+                          <span className="text-muted">vs</span>{" "}
+                          {nameById.get(pairing.blackPlayerId)}
+                        </>
+                      ) : null}
                     </span>
                     {pairing.result ? (
-                      <span className="font-medium">{RESULT_LABEL[pairing.result]}</span>
+                      <Badge tone="accent">{RESULT_LABEL[pairing.result]}</Badge>
+                    ) : pairing.blackPlayerId === null ? (
+                      <Badge tone="gold">{t("byeLabel")}</Badge>
                     ) : null}
                   </li>
                 ))}
               </ul>
             )}
-          </section>
+          </Card>
         ))}
 
       {canGenerateNextRound ? (
@@ -95,33 +116,46 @@ export default async function TournamentDetailPage({
       ) : null}
 
       {isTournamentComplete ? (
-        <p className="text-sm text-foreground/60">{t("tournamentComplete")}</p>
+        <p className="text-sm text-muted">{t("tournamentComplete")}</p>
       ) : null}
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium">{t("standingsHeading")}</h2>
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left text-foreground/60">
-              <th className="font-normal">{t("rankLabel")}</th>
-              <th className="font-normal">{t("playerLabel")}</th>
-              <th className="font-normal">{t("scoreLabel")}</th>
-              <th className="font-normal">{t("buchholzLabel")}</th>
-              <th className="font-normal">{t("sonnebornBergerLabel")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {standings.map((row, index) => (
-              <tr key={row.playerId} className="border-t border-foreground/10">
-                <td className="py-1">{index + 1}</td>
-                <td>{nameById.get(row.playerId) ?? row.playerId}</td>
-                <td>{row.score}</td>
-                <td>{row.buchholz}</td>
-                <td>{row.sonnebornBerger}</td>
+        <h2 className="font-display text-lg font-semibold">{t("standingsHeading")}</h2>
+        <Card className="overflow-x-auto p-0">
+          <table className="w-full min-w-[420px] text-sm">
+            <thead>
+              <tr className="border-b border-border text-left text-muted">
+                <th className="px-4 py-2 font-normal">{t("rankLabel")}</th>
+                <th className="px-4 py-2 font-normal">{t("playerLabel")}</th>
+                <th className="px-4 py-2 font-normal">{t("scoreLabel")}</th>
+                <th className="px-4 py-2 font-normal">{t("buchholzLabel")}</th>
+                <th className="px-4 py-2 font-normal">{t("sonnebornBergerLabel")}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {standings.map((row, index) => (
+                <tr
+                  key={row.playerId}
+                  className="border-b border-border last:border-0 odd:bg-background/50"
+                >
+                  <td className="px-4 py-2">
+                    {index === 0 ? (
+                      <Badge tone="gold">1</Badge>
+                    ) : (
+                      index + 1
+                    )}
+                  </td>
+                  <td className="px-4 py-2 font-medium">
+                    {nameById.get(row.playerId) ?? row.playerId}
+                  </td>
+                  <td className="px-4 py-2">{row.score}</td>
+                  <td className="px-4 py-2 text-muted">{row.buchholz}</td>
+                  <td className="px-4 py-2 text-muted">{row.sonnebornBerger}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Card>
       </section>
     </main>
   );

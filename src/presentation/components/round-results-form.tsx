@@ -7,6 +7,9 @@ import {
   submitRoundResultsAction,
   type SubmitResultsFormState,
 } from "@/app/[locale]/tournaments/actions";
+import { Button } from "@/presentation/components/ui/button";
+import { Badge } from "@/presentation/components/ui/badge";
+import { inputClasses } from "@/presentation/components/ui/input";
 
 const initialState: SubmitResultsFormState = { error: null };
 
@@ -31,57 +34,53 @@ export function RoundResultsForm({
       <input type="hidden" name="tournamentId" value={tournamentId} />
       <input type="hidden" name="roundNumber" value={round.number} />
 
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="text-left text-foreground/60">
-            <th className="py-1 font-normal">{t("boardLabel")}</th>
-            <th className="font-normal">{t("whiteLabel")}</th>
-            <th className="font-normal">{t("blackLabel")}</th>
-            <th className="font-normal" />
-          </tr>
-        </thead>
-        <tbody>
-          {round.pairings.map((pairing) => (
-            <tr key={pairing.board} className="border-t border-foreground/10">
-              <td className="py-2">{pairing.board}</td>
-              <td>{nameById.get(pairing.whitePlayerId) ?? pairing.whitePlayerId}</td>
-              <td>
-                {pairing.blackPlayerId
-                  ? nameById.get(pairing.blackPlayerId) ?? pairing.blackPlayerId
-                  : t("byeLabel")}
-              </td>
-              <td>
-                {pairing.blackPlayerId ? (
-                  <select
-                    name={`result-${pairing.board}`}
-                    defaultValue={pairing.result ?? ""}
-                    className="rounded border border-foreground/20 bg-transparent px-1 py-0.5"
-                  >
-                    <option value="">{t("resultPending")}</option>
-                    <option value="white">{t("resultWhiteWins")}</option>
-                    <option value="draw">{t("resultDraw")}</option>
-                    <option value="black">{t("resultBlackWins")}</option>
-                  </select>
-                ) : null}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="flex flex-col gap-2">
+        {round.pairings.map((pairing) => (
+          <div
+            key={pairing.board}
+            className="flex flex-wrap items-center gap-3 rounded-lg border border-border px-3 py-2.5 text-sm"
+          >
+            <Badge tone="neutral" className="shrink-0">
+              {t("boardLabel")} {pairing.board}
+            </Badge>
+            <span className="flex-1 font-medium">
+              {nameById.get(pairing.whitePlayerId) ?? pairing.whitePlayerId}
+              {pairing.blackPlayerId ? (
+                <>
+                  {" "}
+                  <span className="font-normal text-muted">vs</span>{" "}
+                  {nameById.get(pairing.blackPlayerId) ?? pairing.blackPlayerId}
+                </>
+              ) : null}
+            </span>
+
+            {pairing.blackPlayerId ? (
+              <select
+                name={`result-${pairing.board}`}
+                defaultValue={pairing.result ?? ""}
+                className={`${inputClasses} py-1.5`}
+              >
+                <option value="">{t("resultPending")}</option>
+                <option value="white">{t("resultWhiteWins")}</option>
+                <option value="draw">{t("resultDraw")}</option>
+                <option value="black">{t("resultBlackWins")}</option>
+              </select>
+            ) : (
+              <Badge tone="gold">{t("byeLabel")}</Badge>
+            )}
+          </div>
+        ))}
+      </div>
 
       {state.error ? (
-        <p className="text-sm text-red-600" role="alert">
+        <p className="text-sm text-danger" role="alert">
           {state.error}
         </p>
       ) : null}
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="self-start rounded bg-foreground px-4 py-2 text-sm font-medium text-background disabled:opacity-50"
-      >
+      <Button type="submit" disabled={isPending} className="self-start">
         {t("submitResultsButton")}
-      </button>
+      </Button>
     </form>
   );
 }

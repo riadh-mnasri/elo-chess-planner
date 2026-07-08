@@ -6,6 +6,9 @@ import {
   registerPlayerAction,
   type RegisterPlayerFormState,
 } from "@/app/[locale]/players/actions";
+import { Card } from "@/presentation/components/ui/card";
+import { Button } from "@/presentation/components/ui/button";
+import { inputClasses, labelClasses } from "@/presentation/components/ui/input";
 
 const initialState: RegisterPlayerFormState = { error: null };
 
@@ -17,82 +20,57 @@ export function PlayerForm() {
   );
 
   return (
-    <form
-      action={formAction}
-      className="flex flex-col gap-3 rounded-lg border border-foreground/10 p-4"
-    >
-      <h2 className="text-lg font-medium">{t("addPlayerHeading")}</h2>
+    <Card>
+      <form action={formAction} className="flex flex-col gap-4">
+        <h2 className="font-display text-lg font-semibold">
+          {t("addPlayerHeading")}
+        </h2>
 
-      <label className="flex flex-col gap-1 text-sm">
-        {t("nameLabel")}
-        <input
-          name="name"
-          required
-          className="rounded border border-foreground/20 bg-transparent px-2 py-1"
-        />
-      </label>
+        <label className={labelClasses}>
+          {t("nameLabel")}
+          <input name="name" required className={inputClasses} />
+        </label>
 
-      <label className="flex flex-col gap-1 text-sm">
-        {t("typeLabel")}
-        <select
-          name="type"
-          defaultValue="family"
-          className="rounded border border-foreground/20 bg-transparent px-2 py-1"
-        >
-          <option value="family">{t("typeFamily")}</option>
-          <option value="guest">{t("typeGuest")}</option>
-        </select>
-      </label>
+        <label className={labelClasses}>
+          {t("typeLabel")}
+          <select name="type" defaultValue="family" className={inputClasses}>
+            <option value="family">{t("typeFamily")}</option>
+            <option value="guest">{t("typeGuest")}</option>
+          </select>
+        </label>
 
-      <label className="flex flex-col gap-1 text-sm">
-        {t("birthDateLabel")}
-        <input
-          type="date"
-          name="birthDate"
-          className="rounded border border-foreground/20 bg-transparent px-2 py-1"
-        />
-      </label>
+        <label className={labelClasses}>
+          {t("birthDateLabel")}
+          <input type="date" name="birthDate" className={inputClasses} />
+        </label>
 
-      <label className="flex flex-col gap-1 text-sm">
-        {t("fideRatingLabel")}
-        <input
-          type="number"
-          name="fideRating"
-          className="rounded border border-foreground/20 bg-transparent px-2 py-1"
-        />
-      </label>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <label className={labelClasses}>
+            {t("fideRatingLabel")}
+            <input type="number" name="fideRating" className={inputClasses} />
+          </label>
 
-      <label className="flex flex-col gap-1 text-sm">
-        {t("ffeRatingLabel")}
-        <input
-          type="number"
-          name="ffeRating"
-          className="rounded border border-foreground/20 bg-transparent px-2 py-1"
-        />
-      </label>
+          <label className={labelClasses}>
+            {t("ffeRatingLabel")}
+            <input type="number" name="ffeRating" className={inputClasses} />
+          </label>
 
-      <label className="flex flex-col gap-1 text-sm">
-        {t("chesscomRatingLabel")}
-        <input
-          type="number"
-          name="chesscomRating"
-          className="rounded border border-foreground/20 bg-transparent px-2 py-1"
-        />
-      </label>
+          <label className={labelClasses}>
+            {t("chesscomRatingLabel")}
+            <input type="number" name="chesscomRating" className={inputClasses} />
+          </label>
+        </div>
 
-      {state.error ? (
-        <p className="text-sm text-red-600" role="alert">
-          {state.error}
-        </p>
-      ) : null}
+        {state.error ? (
+          <p className="text-sm text-danger" role="alert">
+            {state.error}
+          </p>
+        ) : null}
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="mt-2 rounded bg-foreground px-4 py-2 text-sm font-medium text-background disabled:opacity-50"
-      >
-        {t("submitButton")}
-      </button>
-    </form>
+        <Button type="submit" disabled={isPending} className="self-start">
+          {t("submitButton")}
+        </Button>
+      </form>
+    </Card>
   );
 }

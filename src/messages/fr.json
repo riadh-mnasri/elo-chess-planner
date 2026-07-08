@@ -1,4 +1,9 @@
 {
+  "Nav": {
+    "home": "Accueil",
+    "players": "Joueurs",
+    "tournaments": "Tournois"
+  },
   "HomePage": {
     "title": "EloChessPlanner",
     "subtitle": "Organisez vos tournois d'échecs maison et suivez votre Elo",

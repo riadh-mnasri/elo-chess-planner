@@ -15,18 +15,18 @@ export function LocaleSwitcher() {
   const router = useRouter();
 
   return (
-    <div className="flex gap-2 text-sm font-medium">
+    <div className="flex gap-1 rounded-full border border-border p-0.5 text-sm font-medium">
       {routing.locales.map((locale) => (
         <button
           key={locale}
           type="button"
           disabled={locale === activeLocale}
           onClick={() => router.replace(pathname, { locale })}
-          className={
+          className={`rounded-full px-2.5 py-1 transition-colors ${
             locale === activeLocale
-              ? "text-foreground underline underline-offset-4"
-              : "text-foreground/60 hover:text-foreground"
-          }
+              ? "bg-accent text-accent-foreground"
+              : "text-muted hover:text-foreground"
+          }`}
         >
           {localeLabels[locale]}
         </button>
