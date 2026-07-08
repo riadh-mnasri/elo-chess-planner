@@ -3,7 +3,6 @@ import os from "node:os";
 import { JsonFilePlayerRepository } from "@/infrastructure/repositories/json-file-player-repository";
 import { JsonFileTournamentRepository } from "@/infrastructure/repositories/json-file-tournament-repository";
 import { JsonFileExternalGameRepository } from "@/infrastructure/repositories/json-file-external-game-repository";
-import { JsonFileAuthSettingsRepository } from "@/infrastructure/repositories/json-file-auth-settings-repository";
 import { ChessComRatingProvider } from "@/infrastructure/external-rating-providers/chess-com-rating-provider";
 import { LichessRatingProvider } from "@/infrastructure/external-rating-providers/lichess-rating-provider";
 import { RegisterPlayerUseCase } from "@/application/use-cases/register-player";
@@ -19,8 +18,6 @@ import { ImportExternalGamesFromCsvUseCase } from "@/application/use-cases/impor
 import { SyncExternalGamesUseCase } from "@/application/use-cases/sync-external-games";
 import { ListExternalGamesUseCase } from "@/application/use-cases/list-external-games";
 import { GetEloForecastUseCase } from "@/application/use-cases/get-elo-forecast";
-import { GetCurrentPasswordHashUseCase } from "@/application/use-cases/get-current-password-hash";
-import { ChangePasswordUseCase } from "@/application/use-cases/change-password";
 
 // Local file-based persistence: keeps data across server restarts and is
 // trivially exportable/backed up as a plain JSON file. The project folder
@@ -43,9 +40,6 @@ const tournamentRepository = new JsonFileTournamentRepository(
 );
 const externalGameRepository = new JsonFileExternalGameRepository(
   path.join(dataDir, "external-games.json"),
-);
-const authSettingsRepository = new JsonFileAuthSettingsRepository(
-  path.join(dataDir, "auth.json"),
 );
 
 export const registerPlayerUseCase = new RegisterPlayerUseCase(playerRepository);
@@ -76,8 +70,3 @@ export const getEloForecastUseCase = new GetEloForecastUseCase(
   playerRepository,
   externalGameRepository,
 );
-
-export const getCurrentPasswordHashUseCase = new GetCurrentPasswordHashUseCase(
-  authSettingsRepository,
-);
-export const changePasswordUseCase = new ChangePasswordUseCase(authSettingsRepository);

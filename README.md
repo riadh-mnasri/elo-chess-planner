@@ -31,8 +31,6 @@ change. Live at [elo-chess-planner.vercel.app](https://elo-chess-planner.vercel.
   (min/median/max), extrapolated from the imported game history and playing
   cadence.
 - Fully bilingual interface (English/French), light and dark themes.
-- Optional shared-password gate for the deployed instance (see
-  "Deploying to Vercel" below).
 
 ### Architecture
 
@@ -82,13 +80,6 @@ npx vercel --prod # production deployment
 Or connect the GitHub repository to a Vercel project for automatic
 deployments on every push.
 
-To protect the deployed instance with a shared password, set an
-`APP_PASSWORD` environment variable (`vercel env add APP_PASSWORD
-production`, or via the Vercel dashboard). When it is set, every visitor is
-redirected to a login page until they enter it; a cookie then keeps them
-signed in. Locally, the app stays open unless you also set `APP_PASSWORD` in
-your shell or `.env.local` (which is gitignored - never commit it).
-
 **Important limitation**: the local JSON file storage only works reliably
 on a single local instance. On Vercel, the deployment's filesystem is
 read-only except for `/tmp`, which the app falls back to automatically so
@@ -131,8 +122,6 @@ persistent, multi-device usage.
   importées et du rythme de jeu.
 - Interface entièrement bilingue (anglais/français), thèmes clair et
   sombre.
-- Protection optionnelle par mot de passe partagé pour l'instance déployée
-  (voir "Déploiement sur Vercel" ci-dessous).
 
 ### Architecture
 
@@ -183,14 +172,6 @@ npx vercel --prod # déploiement en production
 
 Ou connectez le dépôt GitHub à un projet Vercel pour un déploiement
 automatique à chaque push.
-
-Pour protéger l'instance déployée par un mot de passe partagé, définissez
-une variable d'environnement `APP_PASSWORD` (`vercel env add APP_PASSWORD
-production`, ou via le dashboard Vercel). Une fois définie, chaque visiteur
-est redirigé vers une page de connexion tant qu'il ne l'a pas saisi ; un
-cookie le garde ensuite connecté. En local, l'application reste ouverte sauf
-si vous définissez aussi `APP_PASSWORD` dans votre shell ou `.env.local`
-(qui est ignoré par git : ne le committez jamais).
 
 **Limitation importante** : le stockage JSON local ne fonctionne de façon
 fiable que sur une seule instance locale. Sur Vercel, le système de fichiers
