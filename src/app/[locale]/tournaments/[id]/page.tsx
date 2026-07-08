@@ -83,17 +83,17 @@ export default async function TournamentDetailPage({
                       isWinner ? "bg-gold/10" : "odd:bg-background/50"
                     }`}
                   >
-                    <td className="px-4 py-2">
-                      {isTournamentComplete && index < 3 ? (
-                        <span className="text-xl leading-none" aria-label={`#${index + 1}`}>
-                          {MEDALS[index]}
-                        </span>
-                      ) : (
-                        <span className="text-muted">{index + 1}</span>
-                      )}
-                    </td>
+                    <td className="px-4 py-2 text-muted">{index + 1}</td>
                     <td className="px-4 py-2 font-medium">
                       <span className="inline-flex items-center gap-1.5">
+                        {isTournamentComplete && index < 3 ? (
+                          <span
+                            className="text-base leading-none"
+                            aria-label={`#${index + 1}`}
+                          >
+                            {MEDALS[index]}
+                          </span>
+                        ) : null}
                         {nameById.get(row.playerId) ?? row.playerId}
                         {isWinner ? (
                           <span aria-hidden="true" className="text-base leading-none">
