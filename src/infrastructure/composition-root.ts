@@ -1,4 +1,5 @@
 import path from "node:path";
+import os from "node:os";
 import { JsonFilePlayerRepository } from "@/infrastructure/repositories/json-file-player-repository";
 import { JsonFileTournamentRepository } from "@/infrastructure/repositories/json-file-tournament-repository";
 import { JsonFileExternalGameRepository } from "@/infrastructure/repositories/json-file-external-game-repository";
@@ -18,20 +19,26 @@ import { SyncExternalGamesUseCase } from "@/application/use-cases/sync-external-
 import { ListExternalGamesUseCase } from "@/application/use-cases/list-external-games";
 
 // Local file-based persistence: keeps data across server restarts and is
-// trivially exportable/backed up as a plain JSON file. Works well for a
-// single local instance (dev, or self-hosted at home), but is not suitable
-// for a multi-instance serverless deployment (Vercel) since the filesystem
-// is ephemeral and not shared between instances there. A database-backed
-// adapter (Postgres/Neon) implementing the same repository ports will be
-// needed before deploying to Vercel with real persistence.
+// trivially exportable/backed up as a plain JSON file. The project folder
+// is writable locally, which is what makes the file useful as a backup/
+// export, but on Vercel the deployment bundle is read-only - only /tmp is
+// writable there, and it is not guaranteed to survive between invocations
+// or be shared across instances. Writing to /tmp avoids crashing on Vercel,
+// but data can still disappear at any time in that environment. A
+// database-backed adapter (Postgres/Neon) implementing the same repository
+// ports is still needed for real persistence once deployed.
+const dataDir = process.env.VERCEL
+  ? path.join(os.tmpdir(), "elo-chess-planner-data")
+  : path.join(process.cwd(), ".data");
+
 const playerRepository = new JsonFilePlayerRepository(
-  path.join(process.cwd(), ".data", "players.json"),
+  path.join(dataDir, "players.json"),
 );
 const tournamentRepository = new JsonFileTournamentRepository(
-  path.join(process.cwd(), ".data", "tournaments.json"),
+  path.join(dataDir, "tournaments.json"),
 );
 const externalGameRepository = new JsonFileExternalGameRepository(
-  path.join(process.cwd(), ".data", "external-games.json"),
+  path.join(dataDir, "external-games.json"),
 );
 
 export const registerPlayerUseCase = new RegisterPlayerUseCase(playerRepository);
