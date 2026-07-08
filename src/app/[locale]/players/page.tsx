@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { listPlayersUseCase } from "@/infrastructure/composition-root";
 import { PlayerForm } from "@/presentation/components/player-form";
 import { Card } from "@/presentation/components/ui/card";
@@ -55,15 +56,23 @@ export default async function PlayersPage() {
                       </span>
                     </div>
                   </div>
-                  <form action={removePlayerAction}>
-                    <input type="hidden" name="playerId" value={player.id} />
-                    <button
-                      type="submit"
-                      className="shrink-0 text-xs font-medium text-danger hover:underline"
+                  <div className="flex shrink-0 items-center gap-3">
+                    <Link
+                      href={`/players/${player.id}/import`}
+                      className="text-xs font-medium text-accent hover:underline"
                     >
-                      {t("removeButton")}
-                    </button>
-                  </form>
+                      {t("importLink")}
+                    </Link>
+                    <form action={removePlayerAction}>
+                      <input type="hidden" name="playerId" value={player.id} />
+                      <button
+                        type="submit"
+                        className="text-xs font-medium text-danger hover:underline"
+                      >
+                        {t("removeButton")}
+                      </button>
+                    </form>
+                  </div>
                 </Card>
               </li>
             ))}

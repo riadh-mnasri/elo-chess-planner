@@ -28,7 +28,31 @@
     "emptyState": "Aucun joueur enregistré pour le moment.",
     "ratingUnrated": "Non classé",
     "removeButton": "Retirer",
-    "removeConfirm": "Retirer {name} ?"
+    "removeConfirm": "Retirer {name} ?",
+    "importLink": "Importer des résultats"
+  },
+  "ImportPage": {
+    "title": "Importer des résultats pour {name}",
+    "backLink": "Retour aux joueurs",
+    "csvHeading": "Coller un CSV",
+    "csvHelp": "Colonnes : date,opponent,result,eloBefore,eloAfter,source. Result vaut win/loss/draw, source vaut fide/ffe/chesscom/lichess. eloBefore peut être laissé vide.",
+    "csvPlaceholder": "2026-06-01,Jean Dupont,win,1450,1458,ffe",
+    "csvSubmitButton": "Importer le CSV",
+    "syncHeading": "Synchroniser depuis un compte en ligne",
+    "usernameLabel": "Nom d'utilisateur",
+    "syncChesscomButton": "Synchroniser depuis chess.com",
+    "syncLichessButton": "Synchroniser depuis lichess",
+    "importSuccess": "{count} partie(s) importée(s).",
+    "historyHeading": "Historique d'import",
+    "historyEmpty": "Aucune partie importée pour le moment.",
+    "dateLabel": "Date",
+    "opponentLabel": "Adversaire",
+    "resultLabel": "Résultat",
+    "ratingChangeLabel": "Elo",
+    "sourceLabel": "Source",
+    "resultWin": "Victoire",
+    "resultLoss": "Défaite",
+    "resultDraw": "Nul"
   },
   "TournamentsPage": {
     "title": "Tournois",

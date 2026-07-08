@@ -1,6 +1,9 @@
 import path from "node:path";
 import { JsonFilePlayerRepository } from "@/infrastructure/repositories/json-file-player-repository";
 import { JsonFileTournamentRepository } from "@/infrastructure/repositories/json-file-tournament-repository";
+import { JsonFileExternalGameRepository } from "@/infrastructure/repositories/json-file-external-game-repository";
+import { ChessComRatingProvider } from "@/infrastructure/external-rating-providers/chess-com-rating-provider";
+import { LichessRatingProvider } from "@/infrastructure/external-rating-providers/lichess-rating-provider";
 import { RegisterPlayerUseCase } from "@/application/use-cases/register-player";
 import { ListPlayersUseCase } from "@/application/use-cases/list-players";
 import { RemovePlayerUseCase } from "@/application/use-cases/remove-player";
@@ -10,6 +13,9 @@ import { GetTournamentUseCase } from "@/application/use-cases/get-tournament";
 import { GenerateNextRoundUseCase } from "@/application/use-cases/generate-next-round";
 import { SubmitRoundResultsUseCase } from "@/application/use-cases/submit-round-results";
 import { SubmitPastedRoundResultsUseCase } from "@/application/use-cases/submit-pasted-round-results";
+import { ImportExternalGamesFromCsvUseCase } from "@/application/use-cases/import-external-games-from-csv";
+import { SyncExternalGamesUseCase } from "@/application/use-cases/sync-external-games";
+import { ListExternalGamesUseCase } from "@/application/use-cases/list-external-games";
 
 // Local file-based persistence: keeps data across server restarts and is
 // trivially exportable/backed up as a plain JSON file. Works well for a
@@ -23,6 +29,9 @@ const playerRepository = new JsonFilePlayerRepository(
 );
 const tournamentRepository = new JsonFileTournamentRepository(
   path.join(process.cwd(), ".data", "tournaments.json"),
+);
+const externalGameRepository = new JsonFileExternalGameRepository(
+  path.join(process.cwd(), ".data", "external-games.json"),
 );
 
 export const registerPlayerUseCase = new RegisterPlayerUseCase(playerRepository);
@@ -40,3 +49,12 @@ export const submitRoundResultsUseCase = new SubmitRoundResultsUseCase(tournamen
 export const submitPastedRoundResultsUseCase = new SubmitPastedRoundResultsUseCase(
   tournamentRepository,
 );
+
+export const importExternalGamesFromCsvUseCase = new ImportExternalGamesFromCsvUseCase(
+  externalGameRepository,
+);
+export const syncExternalGamesUseCase = new SyncExternalGamesUseCase(externalGameRepository, {
+  chesscom: new ChessComRatingProvider(),
+  lichess: new LichessRatingProvider(),
+});
+export const listExternalGamesUseCase = new ListExternalGamesUseCase(externalGameRepository);
