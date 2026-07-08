@@ -11,6 +11,16 @@
     "submitButton": "Entrer",
     "errorMessage": "Mot de passe incorrect."
   },
+  "ChangePasswordPage": {
+    "title": "Changer le mot de passe",
+    "description": "Mettez à jour le mot de passe partagé utilisé pour accéder à l'application. Tout le monde devra utiliser le nouveau à la prochaine connexion.",
+    "currentPasswordLabel": "Mot de passe actuel",
+    "newPasswordLabel": "Nouveau mot de passe",
+    "confirmPasswordLabel": "Confirmer le nouveau mot de passe",
+    "submitButton": "Mettre à jour le mot de passe",
+    "successMessage": "Mot de passe mis à jour.",
+    "changeLink": "Changer le mot de passe"
+  },
   "HomePage": {
     "title": "EloChessPlanner",
     "subtitle": "Organisez vos tournois d'échecs maison et suivez votre Elo",

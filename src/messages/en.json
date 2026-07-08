@@ -11,6 +11,16 @@
     "submitButton": "Enter",
     "errorMessage": "Incorrect password."
   },
+  "ChangePasswordPage": {
+    "title": "Change password",
+    "description": "Update the shared password used to access this app. Everyone will need the new one next time they sign in.",
+    "currentPasswordLabel": "Current password",
+    "newPasswordLabel": "New password",
+    "confirmPasswordLabel": "Confirm new password",
+    "submitButton": "Update password",
+    "successMessage": "Password updated.",
+    "changeLink": "Change password"
+  },
   "HomePage": {
     "title": "EloChessPlanner",
     "subtitle": "Plan home chess tournaments and track your Elo",
