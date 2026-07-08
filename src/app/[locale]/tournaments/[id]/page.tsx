@@ -16,6 +16,8 @@ const RESULT_LABEL: Record<string, string> = {
   draw: "½-½",
 };
 
+const MEDALS = ["🥇", "🥈", "🥉"];
+
 export default async function TournamentDetailPage({
   params,
 }: {
@@ -139,8 +141,14 @@ export default async function TournamentDetailPage({
                   className="border-b border-border last:border-0 odd:bg-background/50"
                 >
                   <td className="px-4 py-2">
-                    {index === 0 ? (
-                      <Badge tone="gold">1</Badge>
+                    {isTournamentComplete && index < 3 ? (
+                      <span
+                        className="inline-flex items-center gap-1 text-lg"
+                        aria-label={`#${index + 1}`}
+                      >
+                        {MEDALS[index]}
+                        {index === 0 ? <span aria-hidden="true">🏆</span> : null}
+                      </span>
                     ) : (
                       index + 1
                     )}
