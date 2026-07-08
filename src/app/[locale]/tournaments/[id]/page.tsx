@@ -147,7 +147,12 @@ export default async function TournamentDetailPage({
                         aria-label={`#${index + 1}`}
                       >
                         {MEDALS[index]}
-                        {index === 0 ? <span aria-hidden="true">🏆</span> : null}
+                        {index === 0 ? (
+                          <>
+                            <span aria-hidden="true">🏆</span>
+                            <span aria-hidden="true">🎉</span>
+                          </>
+                        ) : null}
                       </span>
                     ) : (
                       index + 1
