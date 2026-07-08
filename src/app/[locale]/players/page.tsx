@@ -32,7 +32,7 @@ export default async function PlayersPage() {
               <li key={player.id}>
                 <Card className="flex items-center justify-between gap-3 p-3">
                   <div className="flex items-center gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/10 font-display text-sm font-semibold text-accent">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-accent-strong to-accent font-display text-sm font-semibold text-accent-foreground shadow-sm shadow-accent/20">
                       {player.name.charAt(0).toUpperCase()}
                     </span>
                     <div className="flex flex-col gap-1">

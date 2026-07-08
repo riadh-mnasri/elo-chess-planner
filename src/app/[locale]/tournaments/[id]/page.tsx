@@ -135,37 +135,40 @@ export default async function TournamentDetailPage({
               </tr>
             </thead>
             <tbody>
-              {standings.map((row, index) => (
-                <tr
-                  key={row.playerId}
-                  className="border-b border-border last:border-0 odd:bg-background/50"
-                >
-                  <td className="px-4 py-2">
-                    {isTournamentComplete && index < 3 ? (
-                      <span
-                        className="inline-flex items-center gap-1 text-lg"
-                        aria-label={`#${index + 1}`}
-                      >
-                        {MEDALS[index]}
-                        {index === 0 ? (
-                          <>
-                            <span aria-hidden="true">🏆</span>
-                            <span aria-hidden="true">🎉</span>
-                          </>
+              {standings.map((row, index) => {
+                const isWinner = isTournamentComplete && index === 0;
+                return (
+                  <tr
+                    key={row.playerId}
+                    className={`border-b border-border last:border-0 transition-colors ${
+                      isWinner ? "bg-gold/10" : "odd:bg-background/50"
+                    }`}
+                  >
+                    <td className="px-4 py-2">
+                      {isTournamentComplete && index < 3 ? (
+                        <span className="text-xl leading-none" aria-label={`#${index + 1}`}>
+                          {MEDALS[index]}
+                        </span>
+                      ) : (
+                        <span className="text-muted">{index + 1}</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-2 font-medium">
+                      <span className="inline-flex items-center gap-1.5">
+                        {nameById.get(row.playerId) ?? row.playerId}
+                        {isWinner ? (
+                          <span aria-hidden="true" className="text-base leading-none">
+                            🎉
+                          </span>
                         ) : null}
                       </span>
-                    ) : (
-                      index + 1
-                    )}
-                  </td>
-                  <td className="px-4 py-2 font-medium">
-                    {nameById.get(row.playerId) ?? row.playerId}
-                  </td>
-                  <td className="px-4 py-2">{row.score}</td>
-                  <td className="px-4 py-2 text-muted">{row.buchholz}</td>
-                  <td className="px-4 py-2 text-muted">{row.sonnebornBerger}</td>
-                </tr>
-              ))}
+                    </td>
+                    <td className="px-4 py-2">{row.score}</td>
+                    <td className="px-4 py-2 text-muted">{row.buchholz}</td>
+                    <td className="px-4 py-2 text-muted">{row.sonnebornBerger}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </Card>

@@ -19,9 +19,12 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-6 py-4">
         <Link
           href="/"
-          className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-foreground"
+          className="flex items-center gap-2.5 font-display text-lg font-semibold tracking-tight text-foreground"
         >
-          <span aria-hidden="true" className="text-xl text-accent">
+          <span
+            aria-hidden="true"
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-b from-accent-strong to-accent text-base text-accent-foreground shadow-sm shadow-accent/30"
+          >
             ♞
           </span>
           EloChessPlanner
@@ -35,9 +38,9 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={isActive ? "page" : undefined}
-                className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+                className={`rounded-full px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? "bg-accent text-accent-foreground"
+                    ? "bg-gradient-to-b from-accent-strong to-accent text-accent-foreground shadow-sm shadow-accent/30"
                     : "text-muted hover:bg-border/60 hover:text-foreground"
                 }`}
               >
