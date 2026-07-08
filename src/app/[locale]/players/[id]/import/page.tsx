@@ -10,6 +10,7 @@ import { ImportCsvForm } from "@/presentation/components/import-csv-form";
 import { SyncExternalGamesForm } from "@/presentation/components/sync-external-games-form";
 import { Card } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
+import { EmptyState } from "@/presentation/components/ui/empty-state";
 
 export default async function ImportGamesPage({
   params,
@@ -93,7 +94,7 @@ export default async function ImportGamesPage({
         <h2 className="font-display text-lg font-semibold">{t("historyHeading")}</h2>
 
         {games.length === 0 ? (
-          <p className="text-sm text-muted">{t("historyEmpty")}</p>
+          <EmptyState icon="📈" message={t("historyEmpty")} />
         ) : (
           <Card className="overflow-x-auto p-0">
             <table className="w-full min-w-[520px] text-sm">

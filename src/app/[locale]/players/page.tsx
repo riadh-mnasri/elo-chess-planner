@@ -4,6 +4,7 @@ import { listPlayersUseCase } from "@/infrastructure/composition-root";
 import { PlayerForm } from "@/presentation/components/player-form";
 import { Card } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
+import { EmptyState } from "@/presentation/components/ui/empty-state";
 import { removePlayerAction } from "./actions";
 
 export default async function PlayersPage() {
@@ -25,7 +26,7 @@ export default async function PlayersPage() {
         <h2 className="font-display text-lg font-semibold">{t("listHeading")}</h2>
 
         {players.length === 0 ? (
-          <p className="text-sm text-muted">{t("emptyState")}</p>
+          <EmptyState icon="♟" message={t("emptyState")} />
         ) : (
           <ul className="flex flex-col gap-2">
             {players.map((player) => (

@@ -4,6 +4,13 @@
     "players": "Joueurs",
     "tournaments": "Tournois"
   },
+  "LoginPage": {
+    "title": "EloChessPlanner",
+    "description": "Entrez le mot de passe familial partagé pour continuer.",
+    "passwordLabel": "Mot de passe",
+    "submitButton": "Entrer",
+    "errorMessage": "Mot de passe incorrect."
+  },
   "HomePage": {
     "title": "EloChessPlanner",
     "subtitle": "Organisez vos tournois d'échecs maison et suivez votre Elo",

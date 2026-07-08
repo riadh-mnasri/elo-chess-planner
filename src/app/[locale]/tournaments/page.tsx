@@ -4,6 +4,7 @@ import { listTournamentsUseCase } from "@/infrastructure/composition-root";
 import { buttonClasses } from "@/presentation/components/ui/button";
 import { Card } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
+import { EmptyState } from "@/presentation/components/ui/empty-state";
 
 export default async function TournamentsPage() {
   const t = await getTranslations("TournamentsPage");
@@ -24,7 +25,7 @@ export default async function TournamentsPage() {
       </div>
 
       {tournaments.length === 0 ? (
-        <p className="text-sm text-muted">{t("emptyState")}</p>
+        <EmptyState icon="🏆" message={t("emptyState")} />
       ) : (
         <ul className="flex flex-col gap-2">
           {tournaments.map((tournament) => {
