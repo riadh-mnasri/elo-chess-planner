@@ -17,6 +17,7 @@ import { SubmitPastedRoundResultsUseCase } from "@/application/use-cases/submit-
 import { ImportExternalGamesFromCsvUseCase } from "@/application/use-cases/import-external-games-from-csv";
 import { SyncExternalGamesUseCase } from "@/application/use-cases/sync-external-games";
 import { ListExternalGamesUseCase } from "@/application/use-cases/list-external-games";
+import { GetEloForecastUseCase } from "@/application/use-cases/get-elo-forecast";
 
 // Local file-based persistence: keeps data across server restarts and is
 // trivially exportable/backed up as a plain JSON file. The project folder
@@ -65,3 +66,7 @@ export const syncExternalGamesUseCase = new SyncExternalGamesUseCase(externalGam
   lichess: new LichessRatingProvider(),
 });
 export const listExternalGamesUseCase = new ListExternalGamesUseCase(externalGameRepository);
+export const getEloForecastUseCase = new GetEloForecastUseCase(
+  playerRepository,
+  externalGameRepository,
+);

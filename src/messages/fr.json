@@ -52,7 +52,12 @@
     "sourceLabel": "Source",
     "resultWin": "Victoire",
     "resultLoss": "Défaite",
-    "resultDraw": "Nul"
+    "resultDraw": "Nul",
+    "forecastHeading": "Prévision Elo du mois prochain",
+    "forecastCurrentRating": "Rating actuel : {rating}",
+    "forecastRange": "{min} à {max} Elo, médiane {median}",
+    "forecastBasis": "Projection statistique à partir de {gamesPerMonth} parties/mois et d'un K-factor de {kFactor}, basée sur les résultats récents. Ce n'est pas une garantie.",
+    "forecastInsufficientData": "Pas assez de parties importées pour dégager une tendance (au moins 2 parties avec un rating de départ connu sont nécessaires)."
   },
   "TournamentsPage": {
     "title": "Tournois",

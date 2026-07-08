@@ -52,7 +52,12 @@
     "sourceLabel": "Source",
     "resultWin": "Win",
     "resultLoss": "Loss",
-    "resultDraw": "Draw"
+    "resultDraw": "Draw",
+    "forecastHeading": "Next month's Elo forecast",
+    "forecastCurrentRating": "Current rating: {rating}",
+    "forecastRange": "{min} to {max} Elo, median {median}",
+    "forecastBasis": "Statistical projection from {gamesPerMonth} games/month and K-factor {kFactor}, based on recent results. Not a guarantee.",
+    "forecastInsufficientData": "Not enough imported games yet to forecast a trend (at least 2 games with a known starting rating are needed)."
   },
   "TournamentsPage": {
     "title": "Tournaments",
