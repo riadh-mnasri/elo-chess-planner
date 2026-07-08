@@ -60,6 +60,59 @@ export default async function TournamentDetailPage({
         </Link>
       </div>
 
+      <section className="flex flex-col gap-3">
+        <h2 className="font-display text-lg font-semibold">{t("standingsHeading")}</h2>
+        <Card className="overflow-x-auto p-0">
+          <table className="w-full min-w-[420px] text-sm">
+            <thead>
+              <tr className="border-b border-border text-left text-muted">
+                <th className="px-4 py-2 font-normal">{t("rankLabel")}</th>
+                <th className="px-4 py-2 font-normal">{t("playerLabel")}</th>
+                <th className="px-4 py-2 font-normal">{t("scoreLabel")}</th>
+                <th className="px-4 py-2 font-normal">{t("buchholzLabel")}</th>
+                <th className="px-4 py-2 font-normal">{t("sonnebornBergerLabel")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {standings.map((row, index) => {
+                const isWinner = isTournamentComplete && index === 0;
+                return (
+                  <tr
+                    key={row.playerId}
+                    className={`border-b border-border last:border-0 transition-colors ${
+                      isWinner ? "bg-gold/10" : "odd:bg-background/50"
+                    }`}
+                  >
+                    <td className="px-4 py-2">
+                      {isTournamentComplete && index < 3 ? (
+                        <span className="text-xl leading-none" aria-label={`#${index + 1}`}>
+                          {MEDALS[index]}
+                        </span>
+                      ) : (
+                        <span className="text-muted">{index + 1}</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-2 font-medium">
+                      <span className="inline-flex items-center gap-1.5">
+                        {nameById.get(row.playerId) ?? row.playerId}
+                        {isWinner ? (
+                          <span aria-hidden="true" className="text-base leading-none">
+                            🎉
+                          </span>
+                        ) : null}
+                      </span>
+                    </td>
+                    <td className="px-4 py-2">{row.score}</td>
+                    <td className="px-4 py-2 text-muted">{row.buchholz}</td>
+                    <td className="px-4 py-2 text-muted">{row.sonnebornBerger}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </Card>
+      </section>
+
       {tournament.rounds
         .slice()
         .reverse()
@@ -120,59 +173,6 @@ export default async function TournamentDetailPage({
       {isTournamentComplete ? (
         <p className="text-sm text-muted">{t("tournamentComplete")}</p>
       ) : null}
-
-      <section className="flex flex-col gap-3">
-        <h2 className="font-display text-lg font-semibold">{t("standingsHeading")}</h2>
-        <Card className="overflow-x-auto p-0">
-          <table className="w-full min-w-[420px] text-sm">
-            <thead>
-              <tr className="border-b border-border text-left text-muted">
-                <th className="px-4 py-2 font-normal">{t("rankLabel")}</th>
-                <th className="px-4 py-2 font-normal">{t("playerLabel")}</th>
-                <th className="px-4 py-2 font-normal">{t("scoreLabel")}</th>
-                <th className="px-4 py-2 font-normal">{t("buchholzLabel")}</th>
-                <th className="px-4 py-2 font-normal">{t("sonnebornBergerLabel")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {standings.map((row, index) => {
-                const isWinner = isTournamentComplete && index === 0;
-                return (
-                  <tr
-                    key={row.playerId}
-                    className={`border-b border-border last:border-0 transition-colors ${
-                      isWinner ? "bg-gold/10" : "odd:bg-background/50"
-                    }`}
-                  >
-                    <td className="px-4 py-2">
-                      {isTournamentComplete && index < 3 ? (
-                        <span className="text-xl leading-none" aria-label={`#${index + 1}`}>
-                          {MEDALS[index]}
-                        </span>
-                      ) : (
-                        <span className="text-muted">{index + 1}</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-2 font-medium">
-                      <span className="inline-flex items-center gap-1.5">
-                        {nameById.get(row.playerId) ?? row.playerId}
-                        {isWinner ? (
-                          <span aria-hidden="true" className="text-base leading-none">
-                            🎉
-                          </span>
-                        ) : null}
-                      </span>
-                    </td>
-                    <td className="px-4 py-2">{row.score}</td>
-                    <td className="px-4 py-2 text-muted">{row.buchholz}</td>
-                    <td className="px-4 py-2 text-muted">{row.sonnebornBerger}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </Card>
-      </section>
     </main>
   );
 }
