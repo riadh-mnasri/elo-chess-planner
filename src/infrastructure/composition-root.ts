@@ -18,6 +18,7 @@ import { RemovePlayerUseCase } from "@/application/use-cases/remove-player";
 import { CreateTournamentUseCase } from "@/application/use-cases/create-tournament";
 import { ListTournamentsUseCase } from "@/application/use-cases/list-tournaments";
 import { GetTournamentUseCase } from "@/application/use-cases/get-tournament";
+import { RemoveTournamentUseCase } from "@/application/use-cases/remove-tournament";
 import { GenerateNextRoundUseCase } from "@/application/use-cases/generate-next-round";
 import { SubmitRoundResultsUseCase } from "@/application/use-cases/submit-round-results";
 import { SubmitPastedRoundResultsUseCase } from "@/application/use-cases/submit-pasted-round-results";
@@ -64,6 +65,7 @@ export const createTournamentUseCase = new CreateTournamentUseCase(
 );
 export const listTournamentsUseCase = new ListTournamentsUseCase(tournamentRepository);
 export const getTournamentUseCase = new GetTournamentUseCase(tournamentRepository);
+export const removeTournamentUseCase = new RemoveTournamentUseCase(tournamentRepository);
 export const generateNextRoundUseCase = new GenerateNextRoundUseCase(tournamentRepository);
 export const submitRoundResultsUseCase = new SubmitRoundResultsUseCase(tournamentRepository);
 export const submitPastedRoundResultsUseCase = new SubmitPastedRoundResultsUseCase(

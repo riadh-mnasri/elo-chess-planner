@@ -72,4 +72,17 @@ describe("JsonFileTournamentRepository", () => {
     expect(all).toHaveLength(1);
     expect(all[0].rounds).toHaveLength(2);
   });
+
+  it("removes a tournament by id", async () => {
+    // Given a repository with a saved tournament
+    const repository = new JsonFileTournamentRepository(filePath);
+    const tournament = aTournament();
+    await repository.save(tournament);
+
+    // When removing that tournament
+    await repository.remove(tournament.id);
+
+    // Then it is no longer found
+    expect(await repository.findById(tournament.id)).toBeNull();
+  });
 });

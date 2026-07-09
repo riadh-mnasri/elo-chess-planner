@@ -5,6 +5,8 @@ import { buttonClasses } from "@/presentation/components/ui/button";
 import { Card } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
 import { EmptyState } from "@/presentation/components/ui/empty-state";
+import { ConfirmSubmitButton } from "@/presentation/components/confirm-submit-button";
+import { removeTournamentAction } from "./actions";
 
 export default async function TournamentsPage() {
   const t = await getTranslations("TournamentsPage");
@@ -32,8 +34,11 @@ export default async function TournamentsPage() {
             const isComplete = tournament.rounds.length >= tournament.roundsPlanned;
             return (
               <li key={tournament.id}>
-                <Link href={`/tournaments/${tournament.id}`}>
-                  <Card className="flex items-center justify-between gap-3 p-4 transition-colors hover:border-accent/40">
+                <Card className="flex items-center justify-between gap-3 p-4 transition-colors hover:border-accent/40">
+                  <Link
+                    href={`/tournaments/${tournament.id}`}
+                    className="flex flex-1 items-center justify-between gap-3"
+                  >
                     <span className="font-medium">{tournament.name}</span>
                     <Badge tone={isComplete ? "gold" : "accent"}>
                       {t("roundsProgress", {
@@ -41,8 +46,17 @@ export default async function TournamentsPage() {
                         total: tournament.roundsPlanned,
                       })}
                     </Badge>
-                  </Card>
-                </Link>
+                  </Link>
+                  <form action={removeTournamentAction}>
+                    <input type="hidden" name="tournamentId" value={tournament.id} />
+                    <ConfirmSubmitButton
+                      confirmMessage={t("removeConfirm", { name: tournament.name })}
+                      className="ml-3 shrink-0 text-xs font-medium text-danger hover:underline"
+                    >
+                      {t("removeButton")}
+                    </ConfirmSubmitButton>
+                  </form>
+                </Card>
               </li>
             );
           })}

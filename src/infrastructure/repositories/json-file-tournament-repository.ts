@@ -64,4 +64,9 @@ export class JsonFileTournamentRepository implements TournamentRepository {
   async findAll(): Promise<Tournament[]> {
     return this.readAll();
   }
+
+  async remove(id: string): Promise<void> {
+    const tournaments = await this.readAll();
+    await this.writeAll(tournaments.filter((t) => t.id !== id));
+  }
 }

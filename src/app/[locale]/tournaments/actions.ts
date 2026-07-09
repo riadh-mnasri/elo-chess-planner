@@ -6,6 +6,7 @@ import type { GameResult } from "@/domain/tournament/tournament";
 import {
   createTournamentUseCase,
   generateNextRoundUseCase,
+  removeTournamentUseCase,
   submitPastedRoundResultsUseCase,
   submitRoundResultsUseCase,
 } from "@/infrastructure/composition-root";
@@ -118,4 +119,10 @@ export async function generateNextRoundAction(
 
   revalidatePath("/[locale]/tournaments/[id]", "page");
   return { error: null };
+}
+
+export async function removeTournamentAction(formData: FormData): Promise<void> {
+  const tournamentId = String(formData.get("tournamentId") ?? "");
+  await removeTournamentUseCase.execute(tournamentId);
+  revalidatePath("/[locale]/tournaments", "page");
 }

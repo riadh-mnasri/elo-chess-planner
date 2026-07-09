@@ -50,4 +50,9 @@ export class PostgresTournamentRepository implements TournamentRepository {
     const rows = await this.sql<{ data: StoredTournament }[]>`SELECT data FROM tournaments`;
     return rows.map((row) => fromStored(row.data));
   }
+
+  async remove(id: string): Promise<void> {
+    await this.ensureSchema();
+    await this.sql`DELETE FROM tournaments WHERE id = ${id}`;
+  }
 }

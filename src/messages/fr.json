@@ -71,7 +71,9 @@
     "description": "Créez un tournoi maison et générez des appariements Swiss inspirés des règles FIDE, ronde après ronde.",
     "newTournamentButton": "Nouveau tournoi",
     "emptyState": "Aucun tournoi pour le moment.",
-    "roundsProgress": "Ronde {current} / {total}"
+    "roundsProgress": "Ronde {current} / {total}",
+    "removeButton": "Supprimer",
+    "removeConfirm": "Supprimer \"{name}\" ? Cette action est irréversible."
   },
   "NewTournamentPage": {
     "title": "Nouveau tournoi",

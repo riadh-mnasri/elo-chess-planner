@@ -71,7 +71,9 @@
     "description": "Create a home tournament and generate FIDE-inspired Swiss pairings round after round.",
     "newTournamentButton": "New tournament",
     "emptyState": "No tournament yet.",
-    "roundsProgress": "Round {current} / {total}"
+    "roundsProgress": "Round {current} / {total}",
+    "removeButton": "Remove",
+    "removeConfirm": "Remove \"{name}\"? This cannot be undone."
   },
   "NewTournamentPage": {
     "title": "New tournament",
