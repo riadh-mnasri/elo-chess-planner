@@ -94,7 +94,7 @@ export default async function ImportGamesPage({
         <h2 className="font-display text-lg font-semibold">{t("historyHeading")}</h2>
 
         {games.length === 0 ? (
-          <EmptyState icon="📈" message={t("historyEmpty")} />
+          <EmptyState icon={<span className="text-4xl">📈</span>} message={t("historyEmpty")} />
         ) : (
           <Card className="overflow-x-auto p-0">
             <table className="w-full min-w-[520px] text-sm">

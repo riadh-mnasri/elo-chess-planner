@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./locale-switcher";
+import { KnightIcon } from "./icons/knight-icon";
 
 const NAV_ITEMS = [
   { href: "/", key: "home" },
@@ -23,9 +24,9 @@ export function SiteHeader() {
         >
           <span
             aria-hidden="true"
-            className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-b from-accent-strong to-accent text-base text-accent-foreground shadow-sm shadow-accent/30"
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-b from-accent-strong to-accent text-accent-foreground shadow-sm shadow-accent/30"
           >
-            ♞
+            <KnightIcon className="h-4 w-4" />
           </span>
           EloChessPlanner
         </Link>

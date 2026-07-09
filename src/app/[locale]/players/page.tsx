@@ -5,6 +5,7 @@ import { PlayerForm } from "@/presentation/components/player-form";
 import { Card } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
 import { EmptyState } from "@/presentation/components/ui/empty-state";
+import { PawnIcon } from "@/presentation/components/icons/pawn-icon";
 import { removePlayerAction } from "./actions";
 
 export default async function PlayersPage() {
@@ -26,7 +27,7 @@ export default async function PlayersPage() {
         <h2 className="font-display text-lg font-semibold">{t("listHeading")}</h2>
 
         {players.length === 0 ? (
-          <EmptyState icon="♟" message={t("emptyState")} />
+          <EmptyState icon={<PawnIcon className="h-10 w-10" />} message={t("emptyState")} />
         ) : (
           <ul className="flex flex-col gap-2">
             {players.map((player) => (

@@ -25,7 +25,7 @@ export default async function TournamentsPage() {
       </div>
 
       {tournaments.length === 0 ? (
-        <EmptyState icon="🏆" message={t("emptyState")} />
+        <EmptyState icon={<span className="text-4xl">🏆</span>} message={t("emptyState")} />
       ) : (
         <ul className="flex flex-col gap-2">
           {tournaments.map((tournament) => {

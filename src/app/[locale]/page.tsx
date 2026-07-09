@@ -8,6 +8,7 @@ import {
 import { buttonClasses } from "@/presentation/components/ui/button";
 import { Card } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
+import { KnightIcon } from "@/presentation/components/icons/knight-icon";
 
 export default async function HomePage() {
   const t = await getTranslations("HomePage");
@@ -46,9 +47,9 @@ export default async function HomePage() {
         />
         <span
           aria-hidden="true"
-          className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-b from-accent-strong to-accent text-3xl text-accent-foreground shadow-lg shadow-accent/30 ring-1 ring-accent/20"
+          className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-b from-accent-strong to-accent text-accent-foreground shadow-lg shadow-accent/30 ring-1 ring-accent/20"
         >
-          ♞
+          <KnightIcon className="h-7 w-7" />
         </span>
         <h1 className="relative font-display text-3xl font-semibold tracking-tight text-foreground">
           {t("title")}
