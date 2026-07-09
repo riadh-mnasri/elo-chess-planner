@@ -106,7 +106,8 @@
     "scoreLabel": "Score",
     "buchholzLabel": "Buchholz",
     "sonnebornBergerLabel": "Sonneborn-Berger",
-    "printLink": "Feuille d'appariement imprimable"
+    "printLink": "Feuille d'appariement imprimable",
+    "displayLink": "Mode grand écran"
   },
   "PrintPage": {
     "roundHeading": "Ronde {number}",
@@ -115,5 +116,11 @@
     "blackLabel": "Noirs",
     "resultLabel": "Résultat",
     "byeLabel": "Exempt"
+  },
+  "DisplayPage": {
+    "roundHeading": "Ronde {number}",
+    "byeLabel": "Exempt",
+    "exitLink": "Quitter",
+    "tournamentComplete": "Tournoi terminé"
   }
 }

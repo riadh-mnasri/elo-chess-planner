@@ -106,7 +106,8 @@
     "scoreLabel": "Score",
     "buchholzLabel": "Buchholz",
     "sonnebornBergerLabel": "Sonneborn-Berger",
-    "printLink": "Printable pairing sheet"
+    "printLink": "Printable pairing sheet",
+    "displayLink": "Big screen mode"
   },
   "PrintPage": {
     "roundHeading": "Round {number}",
@@ -115,5 +116,11 @@
     "blackLabel": "Black",
     "resultLabel": "Result",
     "byeLabel": "Bye"
+  },
+  "DisplayPage": {
+    "roundHeading": "Round {number}",
+    "byeLabel": "Bye",
+    "exitLink": "Exit",
+    "tournamentComplete": "Tournament complete"
   }
 }

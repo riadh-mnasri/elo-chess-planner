@@ -52,12 +52,20 @@ export default async function TournamentDetailPage({
             {`${tournament.rounds.length} / ${tournament.roundsPlanned}`}
           </Badge>
         </div>
-        <Link
-          href={`/tournaments/${tournament.id}/print`}
-          className="text-sm font-medium text-accent hover:underline underline-offset-4"
-        >
-          {t("printLink")}
-        </Link>
+        <div className="flex flex-col items-end gap-1">
+          <Link
+            href={`/tournaments/${tournament.id}/display`}
+            className="text-sm font-medium text-accent hover:underline underline-offset-4"
+          >
+            {t("displayLink")}
+          </Link>
+          <Link
+            href={`/tournaments/${tournament.id}/print`}
+            className="text-sm font-medium text-accent hover:underline underline-offset-4"
+          >
+            {t("printLink")}
+          </Link>
+        </div>
       </div>
 
       <section className="flex flex-col gap-3">
