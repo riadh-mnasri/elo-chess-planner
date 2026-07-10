@@ -12,6 +12,7 @@ import { PostgresExternalGameRepository } from "@/infrastructure/repositories/po
 import { sql } from "@/infrastructure/database/sql-client";
 import { ChessComRatingProvider } from "@/infrastructure/external-rating-providers/chess-com-rating-provider";
 import { LichessRatingProvider } from "@/infrastructure/external-rating-providers/lichess-rating-provider";
+import { FfeHtmlTournamentProvider } from "@/infrastructure/external-rating-providers/ffe-tournament-provider";
 import { RegisterPlayerUseCase } from "@/application/use-cases/register-player";
 import { ListPlayersUseCase } from "@/application/use-cases/list-players";
 import { RemovePlayerUseCase } from "@/application/use-cases/remove-player";
@@ -24,6 +25,7 @@ import { SubmitRoundResultsUseCase } from "@/application/use-cases/submit-round-
 import { SubmitPastedRoundResultsUseCase } from "@/application/use-cases/submit-pasted-round-results";
 import { ImportExternalGamesFromCsvUseCase } from "@/application/use-cases/import-external-games-from-csv";
 import { SyncExternalGamesUseCase } from "@/application/use-cases/sync-external-games";
+import { ImportFfeTournamentGamesUseCase } from "@/application/use-cases/import-ffe-tournament-games";
 import { ListExternalGamesUseCase } from "@/application/use-cases/list-external-games";
 import { GetEloForecastUseCase } from "@/application/use-cases/get-elo-forecast";
 
@@ -79,6 +81,11 @@ export const syncExternalGamesUseCase = new SyncExternalGamesUseCase(externalGam
   chesscom: new ChessComRatingProvider(),
   lichess: new LichessRatingProvider(),
 });
+export const importFfeTournamentGamesUseCase = new ImportFfeTournamentGamesUseCase(
+  externalGameRepository,
+  playerRepository,
+  new FfeHtmlTournamentProvider(),
+);
 export const listExternalGamesUseCase = new ListExternalGamesUseCase(externalGameRepository);
 export const getEloForecastUseCase = new GetEloForecastUseCase(
   playerRepository,

@@ -7,6 +7,7 @@ import {
   listPlayersUseCase,
 } from "@/infrastructure/composition-root";
 import { ImportCsvForm } from "@/presentation/components/import-csv-form";
+import { ImportFfeTournamentForm } from "@/presentation/components/import-ffe-tournament-form";
 import { SyncExternalGamesForm } from "@/presentation/components/sync-external-games-form";
 import { Card } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
@@ -79,6 +80,10 @@ export default async function ImportGamesPage({
           )}
         </Card>
       ) : null}
+
+      <Card className="flex flex-col gap-4">
+        <ImportFfeTournamentForm playerId={player.id} defaultPlayerName={player.name} />
+      </Card>
 
       <Card className="flex flex-col gap-4">
         <ImportCsvForm playerId={player.id} />

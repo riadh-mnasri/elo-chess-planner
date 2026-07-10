@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import type { ExternalApiSource } from "@/application/ports/external-rating-provider";
 import {
   importExternalGamesFromCsvUseCase,
+  importFfeTournamentGamesUseCase,
   syncExternalGamesUseCase,
 } from "@/infrastructure/composition-root";
 
@@ -26,6 +27,30 @@ export async function importCsvAction(
 
   revalidatePath("/[locale]/players/[id]/import", "page");
   return { error: null, importedCount: outcome.importedCount };
+}
+
+export async function importFfeTournamentAction(
+  _previousState: ImportGamesFormState,
+  formData: FormData,
+): Promise<ImportGamesFormState> {
+  const playerId = String(formData.get("playerId") ?? "");
+  const tournamentUrl = String(formData.get("tournamentUrl") ?? "");
+  const playerName = String(formData.get("playerName") ?? "");
+
+  try {
+    const outcome = await importFfeTournamentGamesUseCase.execute({
+      playerId,
+      tournamentUrl,
+      playerName,
+    });
+    revalidatePath("/[locale]/players/[id]/import", "page");
+    return { error: null, importedCount: outcome.importedCount };
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Unknown error",
+      importedCount: null,
+    };
+  }
 }
 
 export async function syncExternalGamesAction(
