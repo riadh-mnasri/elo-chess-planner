@@ -1,6 +1,9 @@
 import type { FetchedExternalGame } from "@/application/ports/external-rating-provider";
 import type { FfeTournamentProvider } from "@/application/ports/ffe-tournament-provider";
-import { parseFfeTournamentGrid } from "@/domain/external-import/parse-ffe-tournament-grid";
+import {
+  parseFfeTournamentGrid,
+  suggestClosestFfePlayerNames,
+} from "@/domain/external-import/parse-ffe-tournament-grid";
 import { simulateFfeEloProgression } from "@/domain/external-import/simulate-ffe-elo-progression";
 import { parseFfeDateRange, spreadDatesAcrossRounds } from "@/domain/external-import/ffe-tournament-dates";
 
@@ -41,7 +44,10 @@ export class FfeHtmlTournamentProvider implements FfeTournamentProvider {
 
     const record = parseFfeTournamentGrid(gridHtml, playerName);
     if (!record || record.games.length === 0) {
-      throw new Error(`FFE: no games found for "${playerName}" in this tournament`);
+      const suggestions = suggestClosestFfePlayerNames(gridHtml, playerName);
+      const hint =
+        suggestions.length > 0 ? ` Did you mean: ${suggestions.join(", ")}?` : "";
+      throw new Error(`FFE: no games found for "${playerName}" in this tournament.${hint}`);
     }
     if (record.playerRating === null) {
       throw new Error(`FFE: could not read a starting rating for "${playerName}"`);

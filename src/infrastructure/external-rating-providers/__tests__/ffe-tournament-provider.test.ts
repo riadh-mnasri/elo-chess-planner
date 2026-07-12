@@ -128,6 +128,24 @@ describe("FfeHtmlTournamentProvider", () => {
     ).rejects.toThrow(/no games found/i);
   });
 
+  it("hints at the closest participant name when the query is a near miss", async () => {
+    // Given the same fixtures but a misspelled last name
+    const fetchFn = vi.fn(async (url: string) => {
+      if (url.includes("FicheTournoi.aspx")) return textResponse(FICHE_HTML);
+      return textResponse(GRID_HTML);
+    });
+    const provider = new FfeHtmlTournamentProvider(fetchFn as unknown as typeof fetch);
+
+    // When / Then the error suggests the intended player
+    await expect(
+      provider.fetchTournamentGames(
+        "https://www.echecs.asso.fr/FicheTournoi.aspx?Ref=70274",
+        "Seji MNASRY",
+        null,
+      ),
+    ).rejects.toThrow(/Did you mean: MNASRI Seji\?/);
+  });
+
   it("throws when the fiche page has no results link", async () => {
     // Given a fiche page without a Resultats.aspx link
     const fetchFn = vi.fn(async () => textResponse("<html></html>"));

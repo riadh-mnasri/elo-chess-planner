@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { parseFfeTournamentGrid } from "../parse-ffe-tournament-grid";
+import {
+  listFfeTournamentPlayerNames,
+  parseFfeTournamentGrid,
+  suggestClosestFfePlayerNames,
+} from "../parse-ffe-tournament-grid";
 
 // Trimmed excerpt matching the real markup shape of an FFE "grille
 // américaine" (Action=Ga) page for two players, covering a win, a draw and
@@ -186,5 +190,40 @@ describe("parseFfeTournamentGrid", () => {
 
     // Then nothing is returned
     expect(record).toBeNull();
+  });
+});
+
+describe("listFfeTournamentPlayerNames", () => {
+  it("lists every player name printed in the grid", () => {
+    expect(listFfeTournamentPlayerNames(FIXTURE_HTML)).toEqual([
+      "LE GOFF Tudy",
+      "VERLUT Eugene",
+    ]);
+  });
+});
+
+describe("suggestClosestFfePlayerNames", () => {
+  it("suggests the closest printed name for a misspelled query", () => {
+    // Given a query with a typo in the last name
+    const suggestions = suggestClosestFfePlayerNames(FIXTURE_HTML, "Tudy Le Gof");
+
+    // Then the intended player comes first
+    expect(suggestions[0]).toBe("LE GOFF Tudy");
+  });
+
+  it("suggests players sharing a name word, e.g. a first-name-only query", () => {
+    // Given only the first name
+    const suggestions = suggestClosestFfePlayerNames(FIXTURE_HTML, "Eugene");
+
+    // Then the matching player is suggested
+    expect(suggestions).toContain("VERLUT Eugene");
+  });
+
+  it("suggests nothing when no printed name is remotely close", () => {
+    // Given a query unrelated to any participant
+    const suggestions = suggestClosestFfePlayerNames(FIXTURE_HTML, "Wxyz Qrst");
+
+    // Then no misleading suggestion is offered
+    expect(suggestions).toEqual([]);
   });
 });

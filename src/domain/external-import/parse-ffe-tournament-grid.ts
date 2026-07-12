@@ -37,6 +37,55 @@ function normalizeName(name: string): string {
     .join(" ");
 }
 
+function levenshtein(a: string, b: string): number {
+  if (a === b) return 0;
+  let previous = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const current = [i];
+    for (let j = 1; j <= b.length; j++) {
+      const substitution = previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1);
+      current.push(Math.min(previous[j] + 1, current[j - 1] + 1, substitution));
+    }
+    previous = current;
+  }
+  return previous[b.length];
+}
+
+export function listFfeTournamentPlayerNames(html: string): string[] {
+  const names: string[] = [];
+  const regex = new RegExp(PLAYER_BLOCK_REGEX);
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(html)) !== null) {
+    const name = match[1].trim().replace(/\s+/g, " ");
+    if (name) names.push(name);
+  }
+  return names;
+}
+
+// Suggests the tournament names closest to a queried player name, so a
+// "no games found" error can hint at the intended player (typo, partial or
+// first-name-only query).
+export function suggestClosestFfePlayerNames(
+  html: string,
+  playerName: string,
+  limit = 3,
+): string[] {
+  const target = normalizeName(playerName);
+  const targetTokens = new Set(target.split(" "));
+
+  const scored = listFfeTournamentPlayerNames(html).map((name) => {
+    const normalized = normalizeName(name);
+    const sharesToken = normalized.split(" ").some((token) => targetTokens.has(token));
+    return { name, sharesToken, distance: levenshtein(normalized, target) };
+  });
+
+  return scored
+    .filter((e) => e.sharesToken || e.distance <= Math.max(3, Math.floor(target.length / 3)))
+    .sort((a, b) => a.distance - b.distance)
+    .slice(0, limit)
+    .map((e) => e.name);
+}
+
 function decodeText(raw: string): string {
   return raw
     .replace(/&nbsp;/g, " ")
