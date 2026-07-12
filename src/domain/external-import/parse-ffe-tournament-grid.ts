@@ -23,8 +23,18 @@ const PLAYER_BLOCK_REGEX =
 const ROW_REGEX = /<tr class=papi_small_[a-z]>([\s\S]*?)<\/tr>/g;
 const CELL_REGEX = /<td[^>]*>([\s\S]*?)<\/td>/g;
 
+// FFE prints names as "NOM Prénom" while the app stores "Prénom Nom", so
+// names are compared as an order-independent set of accent-stripped words.
 function normalizeName(name: string): string {
-  return name.trim().replace(/\s+/g, " ").toUpperCase();
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .toUpperCase()
+    .split(" ")
+    .sort()
+    .join(" ");
 }
 
 function decodeText(raw: string): string {

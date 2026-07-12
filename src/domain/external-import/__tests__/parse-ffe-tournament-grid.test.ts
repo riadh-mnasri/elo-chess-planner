@@ -160,6 +160,25 @@ describe("parseFfeTournamentGrid", () => {
     expect(record!.games).toHaveLength(3);
   });
 
+  it("matches names given in 'Prénom Nom' order against FFE's 'NOM Prénom' print", () => {
+    // Given the same fixture, where FFE prints "LE GOFF Tudy"
+    // When searching with the app's first-name-first form
+    const record = parseFfeTournamentGrid(FIXTURE_HTML, "Tudy Le Goff");
+
+    // Then the player is still found
+    expect(record).not.toBeNull();
+    expect(record!.games).toHaveLength(3);
+  });
+
+  it("matches names ignoring accents", () => {
+    // Given the same fixture, where FFE prints "VERLUT Eugene" without accent
+    // When searching with an accented spelling
+    const record = parseFfeTournamentGrid(FIXTURE_HTML, "Eugène Verlut");
+
+    // Then the player is still found
+    expect(record).not.toBeNull();
+  });
+
   it("returns null when no player matches the given name", () => {
     // Given the fixture
     // When searching for a name that isn't in the tournament
