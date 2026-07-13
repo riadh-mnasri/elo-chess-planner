@@ -6,6 +6,7 @@ import { Card } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
 import { EmptyState } from "@/presentation/components/ui/empty-state";
 import { PawnIcon } from "@/presentation/components/icons/pawn-icon";
+import { SyncFfeRatingButton } from "@/presentation/components/sync-ffe-rating-button";
 import { removePlayerAction } from "./actions";
 
 export default async function PlayersPage() {
@@ -59,6 +60,7 @@ export default async function PlayersPage() {
                     </div>
                   </div>
                   <div className="flex shrink-0 items-center gap-3">
+                    <SyncFfeRatingButton playerId={player.id} />
                     <Link
                       href={`/players/${player.id}/import`}
                       className="text-xs font-medium text-accent hover:underline"

@@ -13,6 +13,7 @@ import { sql } from "@/infrastructure/database/sql-client";
 import { ChessComRatingProvider } from "@/infrastructure/external-rating-providers/chess-com-rating-provider";
 import { LichessRatingProvider } from "@/infrastructure/external-rating-providers/lichess-rating-provider";
 import { FfeHtmlTournamentProvider } from "@/infrastructure/external-rating-providers/ffe-tournament-provider";
+import { FfeHtmlPlayerRatingProvider } from "@/infrastructure/external-rating-providers/ffe-player-rating-provider";
 import { RegisterPlayerUseCase } from "@/application/use-cases/register-player";
 import { ListPlayersUseCase } from "@/application/use-cases/list-players";
 import { RemovePlayerUseCase } from "@/application/use-cases/remove-player";
@@ -26,6 +27,7 @@ import { SubmitPastedRoundResultsUseCase } from "@/application/use-cases/submit-
 import { ImportExternalGamesFromCsvUseCase } from "@/application/use-cases/import-external-games-from-csv";
 import { SyncExternalGamesUseCase } from "@/application/use-cases/sync-external-games";
 import { ImportFfeTournamentGamesUseCase } from "@/application/use-cases/import-ffe-tournament-games";
+import { SyncFfeRatingUseCase } from "@/application/use-cases/sync-ffe-rating";
 import { ListExternalGamesUseCase } from "@/application/use-cases/list-external-games";
 import { GetEloForecastUseCase } from "@/application/use-cases/get-elo-forecast";
 
@@ -85,6 +87,10 @@ export const importFfeTournamentGamesUseCase = new ImportFfeTournamentGamesUseCa
   externalGameRepository,
   playerRepository,
   new FfeHtmlTournamentProvider(),
+);
+export const syncFfeRatingUseCase = new SyncFfeRatingUseCase(
+  playerRepository,
+  new FfeHtmlPlayerRatingProvider(),
 );
 export const listExternalGamesUseCase = new ListExternalGamesUseCase(externalGameRepository);
 export const getEloForecastUseCase = new GetEloForecastUseCase(

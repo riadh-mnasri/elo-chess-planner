@@ -36,7 +36,9 @@
     "ratingUnrated": "Non classé",
     "removeButton": "Retirer",
     "removeConfirm": "Retirer {name} ?",
-    "importLink": "Importer des résultats"
+    "importLink": "Importer des résultats",
+    "syncFfeButton": "Synchro Elo FFE",
+    "syncFfePending": "Synchro…"
   },
   "ImportPage": {
     "title": "Importer des résultats pour {name}",

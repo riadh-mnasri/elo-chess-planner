@@ -36,7 +36,9 @@
     "ratingUnrated": "Unrated",
     "removeButton": "Remove",
     "removeConfirm": "Remove {name}?",
-    "importLink": "Import results"
+    "importLink": "Import results",
+    "syncFfeButton": "Sync FFE Elo",
+    "syncFfePending": "Syncing…"
   },
   "ImportPage": {
     "title": "Import results for {name}",

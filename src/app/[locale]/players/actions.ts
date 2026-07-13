@@ -5,6 +5,7 @@ import type { PlayerType } from "@/domain/player/player";
 import {
   registerPlayerUseCase,
   removePlayerUseCase,
+  syncFfeRatingUseCase,
 } from "@/infrastructure/composition-root";
 
 export interface RegisterPlayerFormState {
@@ -50,6 +51,29 @@ export async function registerPlayerAction(
 
   revalidatePath("/[locale]/players", "page");
   return { error: null };
+}
+
+export interface SyncFfeRatingFormState {
+  error: string | null;
+  syncedRating: number | null;
+}
+
+export async function syncFfeRatingAction(
+  _previousState: SyncFfeRatingFormState,
+  formData: FormData,
+): Promise<SyncFfeRatingFormState> {
+  const playerId = String(formData.get("playerId") ?? "");
+
+  try {
+    const outcome = await syncFfeRatingUseCase.execute(playerId);
+    revalidatePath("/[locale]/players", "page");
+    return { error: null, syncedRating: outcome.rating };
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Unknown error",
+      syncedRating: null,
+    };
+  }
 }
 
 export async function removePlayerAction(formData: FormData): Promise<void> {

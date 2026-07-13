@@ -1,4 +1,5 @@
 import type { GameOutcome } from "./external-game";
+import { normalizeFfeName } from "./ffe-name";
 
 export interface FfeRoundGame {
   round: number;
@@ -22,20 +23,6 @@ const PLAYER_BLOCK_REGEX =
   /<div class=papi_joueur_box>\s*<b>([^<]*)<\/b>([\s\S]*?)<\/table>\s*<\/div>\s*<\/div>/g;
 const ROW_REGEX = /<tr class=papi_small_[a-z]>([\s\S]*?)<\/tr>/g;
 const CELL_REGEX = /<td[^>]*>([\s\S]*?)<\/td>/g;
-
-// FFE prints names as "NOM Prénom" while the app stores "Prénom Nom", so
-// names are compared as an order-independent set of accent-stripped words.
-function normalizeName(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim()
-    .replace(/\s+/g, " ")
-    .toUpperCase()
-    .split(" ")
-    .sort()
-    .join(" ");
-}
 
 function levenshtein(a: string, b: string): number {
   if (a === b) return 0;
@@ -70,11 +57,11 @@ export function suggestClosestFfePlayerNames(
   playerName: string,
   limit = 3,
 ): string[] {
-  const target = normalizeName(playerName);
+  const target = normalizeFfeName(playerName);
   const targetTokens = new Set(target.split(" "));
 
   const scored = listFfeTournamentPlayerNames(html).map((name) => {
-    const normalized = normalizeName(name);
+    const normalized = normalizeFfeName(name);
     const sharesToken = normalized.split(" ").some((token) => targetTokens.has(token));
     return { name, sharesToken, distance: levenshtein(normalized, target) };
   });
@@ -133,13 +120,13 @@ export function parseFfeTournamentGrid(
   html: string,
   playerName: string,
 ): FfeTournamentPlayerRecord | null {
-  const target = normalizeName(playerName);
+  const target = normalizeFfeName(playerName);
   const regex = new RegExp(PLAYER_BLOCK_REGEX);
   let match: RegExpExecArray | null;
 
   while ((match = regex.exec(html)) !== null) {
     const [, blockName, blockBody] = match;
-    if (normalizeName(blockName) !== target) continue;
+    if (normalizeFfeName(blockName) !== target) continue;
 
     const rows = extractRows(blockBody);
     if (rows.length === 0) return null;
